@@ -1,4 +1,4 @@
 
 ### Reminder
-
-- [ ] Change repo and branch to point at DIMEX and development
+- [ ] Change target repo to `informatics-lab/DIMEX`
+- [ ] Change target branch to `development`
