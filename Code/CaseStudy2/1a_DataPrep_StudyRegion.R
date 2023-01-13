@@ -4,11 +4,17 @@
 # Clearing Workspace
 rm(list = ls())
 
+# Command line parser
+library(optigrab)
+
+prefix <- opt_get("prefix", default="~/Dropbox/Github/SPFFinalReport")
+opt_help() # There's a bug and a PR waiting to be merged for this
+
 # Setting working directory
-setwd('~/Dropbox/Github/SPFFinalReport/')
+setwd(prefix)
 
 # Loading source code
-source('~/Dropbox/Github/SPFFinalReport/Code/CaseStudy2/0_Source.R')
+source(paste(prefix, 'Code/CaseStudy2/0_Source.R', sep = '/'))
 
 #############################
 ### Reading in shapefiles ###
