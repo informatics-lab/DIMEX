@@ -36,6 +36,11 @@ Finally, you are now ready to begin working on a new topic branch.
 git checkout -b topic
 ```
 
+## Submitting a Pull Request (PR)
+
+When submitting a pull request remember to specify `informatics-lab/DIMEX` as the repo
+and `development` as the branch.
+
 # DIMEX
 
 Data Integration Model for Exposures (DIMEX)
