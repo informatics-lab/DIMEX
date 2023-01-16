@@ -4,11 +4,17 @@
 # Clearing Workspace
 rm(list = ls())
 
+# Command line parser
+library(optigrab)
+
+prefix <- opt_get("prefix", default="~/Dropbox/Github/SPFFinalReport")
+opt_help()
+
 # Setting working directory
-setwd('~/Dropbox/Github/SPFFinalReport/')
+setwd(prefix)
 
 # Loading source code
-source('~/Dropbox/Github/SPFFinalReport/Code/CaseStudy2/0_Source.R')
+source('Code/CaseStudy2/0_Source.R')
 
 # Loading shapefiles 
 load("Data/CaseStudy2/Processed/Shapefiles/shapefiles.RData")

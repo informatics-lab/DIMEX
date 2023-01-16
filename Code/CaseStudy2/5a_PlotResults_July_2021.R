@@ -4,11 +4,17 @@
 # Clearing Workspace
 rm(list = ls())
 
+# Command line parser
+library(optigrab)
+
+prefix <- opt_get("prefix", default="~/Dropbox/Github/SPFFinalReport")
+opt_help()
+
 # Setting working directory
-setwd('~/Dropbox/DIMEX')
+setwd(prefix)
 
 # Loading source code
-source('~/Dropbox/Github/dimex/Code/0_Source.R')
+source('Code/0_Source.R')
 
 # Read population data
 load("Data/Processed/Population/pop_dat.RData")
