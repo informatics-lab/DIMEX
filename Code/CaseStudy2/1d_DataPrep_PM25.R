@@ -32,7 +32,7 @@ ground_monitors_csv <- c(
   'Data/CaseStudy2/Raw/PM25/GroundMonitors/ManorRad_AQ_hourly.csv',
   'Data/CaseStudy2/Raw/PM25/GroundMonitors/SladeLane_AQ_hourly.csv'
 )
-pm25_emep_tif <- funtion(i, j) {
+pm25_emep_tif <- function(i, j) {
     paste('Data/CaseStudy2/Processed/PM25/EMEP/PM25_', i, '-', sprintf("%02d", j), "00.tif", sep = '')
 }
 
@@ -41,6 +41,17 @@ pm25_cams_rdata <- "Data/CaseStudy2/Processed/PM25/pm25_cams.RData"
 pm25_gm_rdata <- "Data/CaseStudy2/Processed/PM25/pm25_gm.RData"
 pm25_emep_rdata <- "Data/CaseStudy2/Processed/PM25/pm25_emep.RData"
 
+# Check input file(s) exist
+assert_exists <- function(file) {
+  if (!file.exists(file)) {
+    stop(paste(file, " does not exist"))
+  }
+}
+
+assert_exists(shapefiles_rdata)
+for (file in ground_monitors_csv) {
+  assert_exists(file)
+}
 
 # Loading shapefiles 
 load(shapefiles_rdata)
