@@ -14,7 +14,7 @@ opt_help() # There's a bug and a PR waiting to be merged for this
 setwd(prefix)
 
 # Loading source code
-source(paste(prefix, 'Code/CaseStudy2/0_Source.R', sep = '/'))
+source('Code/CaseStudy2/0_Source.R')
 
 #############################
 ### Reading in shapefiles ###
