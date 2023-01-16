@@ -43,15 +43,29 @@ pm25_emep_rdata <- "Data/CaseStudy2/Processed/PM25/pm25_emep.RData"
 
 # Check input file(s) exist
 assert_exists <- function(file) {
-  if (!file.exists(file)) {
-    stop(paste(file, " does not exist"))
+  if (file.exists(file)) {
+    print(paste(file, "exists"))
+  } else {
+    print(paste(file, "does not exist"))
   }
 }
 
+# Report on missing files
 assert_exists(shapefiles_rdata)
+for (i in as.character(seq(as.Date('2020-12-01'), as.Date('2021-12-31'), by = 1))){
+  for (j in 0:23){
+    assert_exists(pm25_cams_tif(i, j))
+  }
+}
+for (i in as.character(seq(as.Date('2021-01-01'), as.Date('2021-04-30'), by = 1))){
+  for (j in 0:23){
+    assert_exists(pm25_emep_tif(i, j))
+  }
+}
 for (file in ground_monitors_csv) {
   assert_exists(file)
 }
+stop()
 
 # Loading shapefiles 
 load(shapefiles_rdata)
