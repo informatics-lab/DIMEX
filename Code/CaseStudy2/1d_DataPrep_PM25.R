@@ -15,33 +15,8 @@ setwd(opts$prefix)
 # Loading source code
 source('Code/CaseStudy2/0_Source.R')
 
-###################
-### File system ###
-###################
-# Input file(s)
-shapefiles_rdata <- "Data/CaseStudy2/Processed/Shapefiles/shapefiles.RData"
-pm25_cams_tif <- function(i, j) {
-    paste('Data/CaseStudy2/Processed/PM25/CAMS-Europe/PM25_', i, '-', sprintf("%02d", j), "00.tif", sep = '')
-}
-ground_monitors_csv <- c(
-  'Data/CaseStudy2/Raw/PM25/GroundMonitors/BroomLane_AQ_hourly.csv',
-  'Data/CaseStudy2/Raw/PM25/GroundMonitors/CromwellAQ_hourly.csv',
-  'Data/CaseStudy2/Raw/PM25/GroundMonitors/DelamereRoad_AQ_hourly.csv',
-  'Data/CaseStudy2/Raw/PM25/GroundMonitors/GrangethorpeAQ_2b_hourly.csv',
-  'Data/CaseStudy2/Raw/PM25/GroundMonitors/ManorRad_AQ_hourly.csv',
-  'Data/CaseStudy2/Raw/PM25/GroundMonitors/SladeLane_AQ_hourly.csv'
-)
-pm25_emep_tif <- function(i, j) {
-    paste('Data/CaseStudy2/Processed/PM25/EMEP/PM25_', i, '-', sprintf("%02d", j), "00.tif", sep = '')
-}
-
-# Output file(s)
-pm25_cams_rdata <- "Data/CaseStudy2/Processed/PM25/pm25_cams.RData"
-pm25_gm_rdata <- "Data/CaseStudy2/Processed/PM25/pm25_gm.RData"
-pm25_emep_rdata <- "Data/CaseStudy2/Processed/PM25/pm25_emep.RData"
-
 # Loading shapefiles 
-load(shapefiles_rdata)
+load("Data/CaseStudy2/Processed/Shapefiles/shapefiles.RData")
 
 ##########################################
 ### Preparing PM data from CAMS-Europe ###
@@ -173,7 +148,7 @@ for (i in as.character(seq(as.Date('2020-12-01'), as.Date('2021-12-31'), by = 1)
   # Loop for each time
   for (j in 0:23){
     # Reading in PM25 from CAMS
-    r <- raster(pm25_cams_tif(i, j))
+    r <- raster(paste('Data/CaseStudy2/Processed/PM25/CAMS-Europe/PM25_', i, '-', sprintf("%02d", j), "00.tif", sep = ''))
     # Renaming raster
     names(r) <- 'pm25'
     # Creating aggregated estimates of PM25 by MSOA
@@ -210,7 +185,7 @@ for (i in as.character(seq(as.Date('2020-12-01'), as.Date('2021-12-31'), by = 1)
 }
 
 # Save cams
-save(pm25_cams, file = pm25_cams_rdata)
+save(pm25_cams, file = "Data/CaseStudy2/Processed/PM25/pm25_cams.RData")
 
 ##############################################
 ### Preparing PM data from ground monitors ###
@@ -223,12 +198,12 @@ mcr_msoa <- subset(ew_msoa, parent_area_name %in% c('Bolton', 'Bury', 'Mancheste
 mcr_msoa <- spTransform(mcr_msoa, CRS("+proj=longlat +datum=WGS84 +no_defs"))
 
 # Reading in LTN network data
-tmp1 <- read.csv(ground_monitors_csv[1])
-tmp2 <- read.csv(ground_monitors_csv[2])
-tmp3 <- read.csv(ground_monitors_csv[3])
-tmp4 <- read.csv(ground_monitors_csv[4])
-tmp5 <- read.csv(ground_monitors_csv[5])
-tmp6 <- read.csv(ground_monitors_csv[6])
+tmp1 <- read.csv('Data/CaseStudy2/Raw/PM25/GroundMonitors/BroomLane_AQ_hourly.csv')
+tmp2 <- read.csv('Data/CaseStudy2/Raw/PM25/GroundMonitors/CromwellAQ_hourly.csv')
+tmp3 <- read.csv('Data/CaseStudy2/Raw/PM25/GroundMonitors/DelamereRoad_AQ_hourly.csv')
+tmp4 <- read.csv('Data/CaseStudy2/Raw/PM25/GroundMonitors/GrangethorpeAQ_2b_hourly.csv')
+tmp5 <- read.csv('Data/CaseStudy2/Raw/PM25/GroundMonitors/ManorRad_AQ_hourly.csv')
+tmp6 <- read.csv('Data/CaseStudy2/Raw/PM25/GroundMonitors/SladeLane_AQ_hourly.csv')
 
 # Adding Longitude
 tmp1$latitude <- 53.441161
@@ -467,7 +442,7 @@ rm(tmp1, tmp2, tmp3, aurn_dat, gm_dat, ltn_dat, mcr_msoa,
    stations_aurn_dat, stations_gm_dat, stations_ltn_dat)
 
 # Save aurn data
-save(pm25_gm, file = pm25_gm_rdata)
+save(pm25_gm, file = "Data/CaseStudy2/Processed/PM25/pm25_gm.RData")
 
 ###################################
 ### Preparing PM data from EMEP ###
@@ -572,7 +547,7 @@ for (i in as.character(seq(as.Date('2021-01-01'), as.Date('2021-04-30'), by = 1)
   # Loop for each time
   for (j in 0:23){
     # Reading in PM25 from CAMS
-    r <- raster(pm25_emep_tif(i, j))
+    r <- raster(paste('Data/CaseStudy2/Processed/PM25/EMEP/PM25_', i, '-', sprintf("%02d", j), "00.tif", sep = ''))
     # Renaming raster
     names(r) <- 'pm25'
     # Creating aggregated estimates of PM25 by MSOA
@@ -609,7 +584,7 @@ for (i in as.character(seq(as.Date('2021-01-01'), as.Date('2021-04-30'), by = 1)
 }
 
 # Save aurn data
-save(pm25_emep, file = pm25_emep_rdata)
+save(pm25_emep, file = "Data/CaseStudy2/Processed/PM25/pm25_emep.RData")
 
 
 
