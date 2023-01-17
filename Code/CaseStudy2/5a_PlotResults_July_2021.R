@@ -5,17 +5,9 @@
 rm(list = ls())
 
 # Command line parser
-library(optparse)
-
-opts <- parse_args(OptionParser(option_list = list(
-  make_option(c("--prefix"),
-              default = "~/Dropbox/Github/SPFFinalReport",
-              help = "top-level directory containing Code/ and Data/")
-)))
-if (!file.exists(opts$prefix)) {
-  stop(paste("directory", opts$prefix, "does not exist. See --prefix option."))
-}
-
+library(here)
+source(here, "Code", "CaseStudy2", "cli.R")
+opts <- cli()
 
 # Setting working directory
 setwd(opts$prefix)
