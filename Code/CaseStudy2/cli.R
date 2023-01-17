@@ -1,13 +1,18 @@
 library(optparse)
+library(magrittr)
 
 cli <- function() {
-  opts <- parse_args(OptionParser(option_list = list(
+  OptionParser(option_list = list(
     make_option(c("--prefix"),
                 default = "~/Dropbox/Github/SPFFinalReport",
                 help = "top-level directory containing Code/ and Data/")
-  )))
+  )) %>%
+  parse_args %>%
+  validate_args
+}
+
+validate_args <- function(opts) {
   if (!file.exists(opts$prefix)) {
     stop(paste("directory", opts$prefix, "does not exist. See --prefix option."))
   }
-  opts
 }
