@@ -7,14 +7,16 @@ rm(list = ls())
 # Command line parser
 library(optigrab)
 
-prefix <- opt_get("prefix", default="~/Dropbox/Github/SPFFinalReport")
+prefix <- opt_get("prefix")
+code_dir <- opt_get("code-dir", default="~/Dropbox/Github/SPFFinalReport/Code/CaseStudy2")
 opt_help()
 
 # Setting working directory
 setwd(prefix)
 
 # Loading source code
-source('Code/CaseStudy2/0_Source.R')
+source(paste(code_dir, '0_Source.R', sep = "/"))
+stop("DEBUG")
 
 ###################
 ### File system ###
