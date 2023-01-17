@@ -5,16 +5,22 @@
 rm(list = ls())
 
 # Command line parser
-library(optigrab)
+library(optparse)
 
-prefix <- opt_get("prefix", default="~/Dropbox/Github/SPFFinalReport")
-opt_help() # There's a bug and a PR waiting to be merged for this
+opts <- parse_args(OptionParser(option_list = list(
+  make_option(c("--prefix"),
+              default = "~/Dropbox/Github/SPFFinalReport",
+              help = "top-level directory containing Code/ and Data/")
+)))
+if (!file.exists(opts$prefix)) {
+  stop(paste("directory", opts$prefix, "does not exist. See --prefix option."))
+}
 
 # Setting working directory
-setwd(prefix)
+setwd(opts$prefix)
 
 # Loading source code
-source(paste(prefix, 'Code/CaseStudy2/0_Source.R', sep = '/'))
+source('Code/CaseStudy2/0_Source.R')
 
 # Setting seed
 set.seed(1409)

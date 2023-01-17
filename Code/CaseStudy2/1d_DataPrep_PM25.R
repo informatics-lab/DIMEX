@@ -5,18 +5,22 @@
 rm(list = ls())
 
 # Command line parser
-library(optigrab)
+library(optparse)
 
-prefix <- opt_get("prefix")
-code_dir <- opt_get("code-dir", default="~/Dropbox/Github/SPFFinalReport/Code/CaseStudy2")
-opt_help()
+opts <- parse_args(OptionParser(option_list = list(
+  make_option(c("--prefix"),
+              default = "~/Dropbox/Github/SPFFinalReport",
+              help = "top-level directory containing Code/ and Data/")
+)))
+if (!file.exists(opts$prefix)) {
+  stop(paste("directory", opts$prefix, "does not exist. See --prefix option."))
+}
 
 # Setting working directory
-setwd(prefix)
+setwd(opts$prefix)
 
 # Loading source code
-source(paste(code_dir, '0_Source.R', sep = "/"))
-stop("DEBUG")
+source('Code/CaseStudy2/0_Source.R')
 
 ###################
 ### File system ###
