@@ -2,6 +2,7 @@
 ### Preliminaries ###
 #####################
 # Loading source code
+library(here)
 source(here("Code", "CaseStudy2", "0_Source.R"))
 
 #############################

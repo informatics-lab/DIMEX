@@ -2,7 +2,8 @@
 ### Preliminaries ###
 #####################
 # Loading source code
-source('Code/CaseStudy2/0_Source.R')
+library(here)
+source(here("Code", "CaseStudy2", "0_Source.R"))
 
 # Read population data
 load("Data/CaseStudy2/Processed/Population/pop_dat.RData")

@@ -2,7 +2,8 @@
 ### Preliminaries ###
 #####################
 # Loading source code
-source('Code/CaseStudy2/0_Source.R')
+library(here)
+source(here("Code", "CaseStudy2", "0_Source.R"))
 
 # Setting seed
 set.seed(1409)
