@@ -21,7 +21,7 @@ validate_args <- function(opts) {
   opts
 }
 
-script <- function(step) {
+script_name <- function(step) {
   if (step == "1a") {
     output <- "1a_DataPrep_StudyRegion.R"
   } else if (step == "1b") {
@@ -58,7 +58,7 @@ main <- function() {
   setwd(opts$prefix)
 
   # Run particular step
-  source(here("Code", "CaseStudy2", script(opts$step)))
+  source(here("Code", "CaseStudy2", script_name(step)))
   
 }
 
