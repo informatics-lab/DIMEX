@@ -54,7 +54,7 @@ script <- function(step) {
 main <- function() {
   opts <- cli()
 
-  # Working director
+  # Working directory
   setwd(opts$prefix)
 
   # Run particular step
