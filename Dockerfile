@@ -1,10 +1,13 @@
-FROM rocker/r-ver:4.1.0
+FROM rocker/r-base:latest
 
 WORKDIR /project
 
+# R package dependencies
+RUN apt-get update && apt-get install -y libcurl4-openssl-dev libssl-dev
+
 # renv
-COPY Code/CaseStudy2/renv.lock renv.lock
 RUN mkdir -p renv
+COPY Code/CaseStudy2/renv.lock renv.lock
 COPY Code/CaseStudy2/.Rprofile .Rprofile
 COPY Code/CaseStudy2/renv/activate.R renv/activate.R
 COPY Code/CaseStudy2/renv/settings.dcf renv/settings.dcf
