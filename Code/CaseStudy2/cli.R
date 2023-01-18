@@ -58,7 +58,7 @@ main <- function() {
   setwd(opts$prefix)
 
   # Run particular step
-  source(here("Code", "CaseStudy2", script_name(step)))
+  source(here("Code", "CaseStudy2", script_name(opts$step)))
   
 }
 
