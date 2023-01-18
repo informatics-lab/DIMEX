@@ -1,19 +1,9 @@
 #####################
 ### Preliminaries ###
 #####################
-# Clearing Workspace
-rm(list = ls())
-
-# Command line parser
-library(here)
-source(here, "Code", "CaseStudy2", "cli.R")
-opts <- cli()
-
-# Setting working directory
-setwd(opts$prefix)
-
 # Loading source code
-source('Code/0_Source.R')
+library(here)
+source(here("Code", "CaseStudy2", "0_Source.R"))
 
 # Read population data
 load("Data/Processed/Population/pop_dat.RData")
