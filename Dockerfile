@@ -3,7 +3,7 @@ FROM rocker/r-base:latest
 WORKDIR /project
 
 # R package dependencies
-RUN apt-get update && apt-get install -y libcurl4-openssl-dev libssl-dev
+RUN apt-get update && apt-get install -y libcurl4-openssl-dev libssl-dev libgdal-dev
 
 # renv
 RUN mkdir -p renv
