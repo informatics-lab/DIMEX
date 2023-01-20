@@ -152,7 +152,7 @@ sample_activities <- function(k) {
 }
 
 # NOTE: Parallelisation strategy is by MSOA purely for convenience
-for (key in unique(pop_data$area_id)){
+for (key in unique(pop_dat$area_id)){
   # Sampling activities 
   activities_complete <- sample_activities(key)
   
