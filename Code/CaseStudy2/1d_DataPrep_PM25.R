@@ -5,6 +5,83 @@
 library(here)
 source(here("Code", "CaseStudy2", "0_Source.R"))
 
+##########################################
+### Preparing PM data from CAMS-Europe ###
+##########################################
+################### The following code takes a while to run, so population estimates  ###################
+################### were run separately and saved to a raster (found underneath)      ###################
+# # Empty raster
+# r <- raster(xmn = -10,
+#             xmx = 3,
+#             ymn = 49,
+#             ymx = 62,
+#             res = 0.1)
+# 
+# # Adding unique  ID
+# r[] <- 1:(dim(r)[1]*dim(r)[2])
+# 
+# # Empty dataset to append to
+# weights <- NULL
+# 
+# # Extracting values
+# a1 <- raster::extract(r, # Grid unique IDs
+#                       uk_full, # Shapefiles
+#                       weight = TRUE, # Give us Weights of the cells so we can do a weighted average of the cells we overlap
+#                       small = TRUE) # Small areas in comparison to the raster
+# 
+# # Setting to missing if not in UK
+# r[!(r[] %in% a1[[1]])] <- NA
+# 
+# # file names
+# files <- c('Data/CaseStudy2/Raw/PM25/CAMS-Europe/CAMSEurope_20201201-20210531.nc',
+#            'Data/CaseStudy2/Raw/PM25/CAMS-Europe/CAMSEurope_20210601-20211130.nc',
+#            'Data/CaseStudy2/Raw/PM25/CAMS-Europe/CAMSEurope_20211201-20220430.nc')
+# 
+# # files start dates
+# start_date <- c(as.Date('2020-12-01'),
+#                 as.Date('2021-06-01'),
+#                 as.Date('2021-12-01'))
+# 
+# # Loop for each file
+# for (i in 1:length(files)){
+#   # Opening raster
+#   ncin <- raster(files[i],
+#                  band = 1,
+#                  verbose = FALSE,
+#                  stopIfNotEqualSpaced = FALSE)
+#   # Getting the number of  days
+#   N_days <- floor(nbands(ncin)/24)
+#   # Dates
+#   Dates <- start_date[i] + (1:N_days) - 1
+#   # Loop for each day in the year
+#   for (j in 1:N_days){
+#     # Getting date
+#     date <- Dates[j]
+#     # Looping for each hour in the day
+#     for (k in (24*(j-1)+1):(24*j)){
+#       # Opening raster
+#       ncin <- raster(files[i],
+#                      band = k,
+#                      verbose = FALSE,
+#                      stopIfNotEqualSpaced = FALSE)
+#       # # Cropping for the UK
+#       # ncin <- crop(ncin, extent(-10, 3, 49, 62))
+#       extent(ncin) <- c(-10, 3, 49, 62)
+#       # Setting to missing if not in  UK
+#       ncin[is.na(r[])] <- NA
+#       # Saving raster
+#       writeRaster(ncin,
+#                   filename = paste('Data/CaseStudy2/Processed/PM25/CAMS-Europe/PM25_', date, '-', sprintf("%02d", k %% 24), "00.tif", sep = ''),
+#                   overwrite = TRUE)
+#       # else {keep <- keep + ncin}
+#       print(paste(date, '-', sprintf("%02d", (k - 1) %% 24), "00", sep = ''))
+#     }
+#   }
+# }
+#########################################################################################################
+#########################################################################################################
+
+  
 # TODO: Remove dependence of calling directory location
 main <- function(output_dir, prefix_dir) {
 
@@ -15,82 +92,6 @@ main <- function(output_dir, prefix_dir) {
   load(file.path(processed_dir, "Shapefiles/shapefiles.RData"))
 
   stop("DEBUG")
-
-  ##########################################
-  ### Preparing PM data from CAMS-Europe ###
-  ##########################################
-  ################### The following code takes a while to run, so population estimates  ###################
-  ################### were run separately and saved to a raster (found underneath)      ###################
-  # # Empty raster
-  # r <- raster(xmn = -10,
-  #             xmx = 3,
-  #             ymn = 49,
-  #             ymx = 62,
-  #             res = 0.1)
-  # 
-  # # Adding unique  ID
-  # r[] <- 1:(dim(r)[1]*dim(r)[2])
-  # 
-  # # Empty dataset to append to
-  # weights <- NULL
-  # 
-  # # Extracting values
-  # a1 <- raster::extract(r, # Grid unique IDs
-  #                       uk_full, # Shapefiles
-  #                       weight = TRUE, # Give us Weights of the cells so we can do a weighted average of the cells we overlap
-  #                       small = TRUE) # Small areas in comparison to the raster
-  # 
-  # # Setting to missing if not in UK
-  # r[!(r[] %in% a1[[1]])] <- NA
-  # 
-  # # file names
-  # files <- c('Data/CaseStudy2/Raw/PM25/CAMS-Europe/CAMSEurope_20201201-20210531.nc',
-  #            'Data/CaseStudy2/Raw/PM25/CAMS-Europe/CAMSEurope_20210601-20211130.nc',
-  #            'Data/CaseStudy2/Raw/PM25/CAMS-Europe/CAMSEurope_20211201-20220430.nc')
-  # 
-  # # files start dates
-  # start_date <- c(as.Date('2020-12-01'),
-  #                 as.Date('2021-06-01'),
-  #                 as.Date('2021-12-01'))
-  # 
-  # # Loop for each file
-  # for (i in 1:length(files)){
-  #   # Opening raster
-  #   ncin <- raster(files[i],
-  #                  band = 1,
-  #                  verbose = FALSE,
-  #                  stopIfNotEqualSpaced = FALSE)
-  #   # Getting the number of  days
-  #   N_days <- floor(nbands(ncin)/24)
-  #   # Dates
-  #   Dates <- start_date[i] + (1:N_days) - 1
-  #   # Loop for each day in the year
-  #   for (j in 1:N_days){
-  #     # Getting date
-  #     date <- Dates[j]
-  #     # Looping for each hour in the day
-  #     for (k in (24*(j-1)+1):(24*j)){
-  #       # Opening raster
-  #       ncin <- raster(files[i],
-  #                      band = k,
-  #                      verbose = FALSE,
-  #                      stopIfNotEqualSpaced = FALSE)
-  #       # # Cropping for the UK
-  #       # ncin <- crop(ncin, extent(-10, 3, 49, 62))
-  #       extent(ncin) <- c(-10, 3, 49, 62)
-  #       # Setting to missing if not in  UK
-  #       ncin[is.na(r[])] <- NA
-  #       # Saving raster
-  #       writeRaster(ncin,
-  #                   filename = paste('Data/CaseStudy2/Processed/PM25/CAMS-Europe/PM25_', date, '-', sprintf("%02d", k %% 24), "00.tif", sep = ''),
-  #                   overwrite = TRUE)
-  #       # else {keep <- keep + ncin}
-  #       print(paste(date, '-', sprintf("%02d", (k - 1) %% 24), "00", sep = ''))
-  #     }
-  #   }
-  # }
-  #########################################################################################################
-  #########################################################################################################
 
   # Empty raster
   r0 <- raster(xmn = -2.8,
