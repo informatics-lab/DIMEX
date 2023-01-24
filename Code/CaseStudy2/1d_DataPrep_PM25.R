@@ -5,6 +5,9 @@
 library(here)
 source(here("Code", "CaseStudy2", "0_Source.R"))
 
+# Directories
+output_dir <- "Data/CaseStudy2/Processed/PM25"
+
 # Loading shapefiles 
 load("Data/CaseStudy2/Processed/Shapefiles/shapefiles.RData")
 
@@ -175,7 +178,7 @@ for (i in as.character(seq(as.Date('2020-12-01'), as.Date('2021-12-31'), by = 1)
 }
 
 # Save cams
-save(pm25_cams, file = "Data/CaseStudy2/Processed/PM25/pm25_cams.RData")
+save(pm25_cams, file = file.path(output_dir, "pm25_cams.RData"))
 
 ##############################################
 ### Preparing PM data from ground monitors ###
@@ -432,7 +435,7 @@ rm(tmp1, tmp2, tmp3, aurn_dat, gm_dat, ltn_dat, mcr_msoa,
    stations_aurn_dat, stations_gm_dat, stations_ltn_dat)
 
 # Save aurn data
-save(pm25_gm, file = "Data/CaseStudy2/Processed/PM25/pm25_gm.RData")
+save(pm25_gm, file = file.path(output_dir, "pm25_gm.RData"))
 
 ###################################
 ### Preparing PM data from EMEP ###
@@ -574,11 +577,4 @@ for (i in as.character(seq(as.Date('2021-01-01'), as.Date('2021-04-30'), by = 1)
 }
 
 # Save aurn data
-save(pm25_emep, file = "Data/CaseStudy2/Processed/PM25/pm25_emep.RData")
-
-
-
-
-
-
-
+save(pm25_emep, file = file.path(output_dir, "pm25_emep.RData"))
