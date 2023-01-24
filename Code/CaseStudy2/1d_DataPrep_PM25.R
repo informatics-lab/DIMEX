@@ -93,6 +93,13 @@ main <- function(output_dir, prefix_dir) {
 
   stop("DEBUG")
 
+  # TODO: allow user to select particular data source
+  prepare_cams()
+  prepare_aurn()
+  prepare_emep()
+}
+
+prepare_cams <- function() {
   # Empty raster
   r0 <- raster(xmn = -2.8,
                xmx = -1.8,
@@ -186,6 +193,10 @@ main <- function(output_dir, prefix_dir) {
 
   # Save cams
   save(pm25_cams, file = file.path(output_dir, "pm25_cams.RData"))
+  
+}
+
+prepare_aurn <- function() {
 
   ##############################################
   ### Preparing PM data from ground monitors ###
@@ -443,56 +454,58 @@ main <- function(output_dir, prefix_dir) {
 
   # Save aurn data
   save(pm25_gm, file = file.path(output_dir, "pm25_gm.RData"))
+}
 
-  ###################################
-  ### Preparing PM data from EMEP ###
-  ###################################
-  ################### The following code takes a while to run, so population estimates  ###################
-  ################### were run separately and saved to a raster (found underneath)      ###################
-  # # file names
-  # files <- c("Data/CaseStudy2/Raw/PM25/EMEP/pm25_janfeb2021_regrid.nc",
-  #            "Data/CaseStudy2/Raw/PM25/EMEP/pm25_marapr2021_regrid.nc")
-  # 
-  # # files start dates
-  # start_date <- c(as.Date('2021-01-01'),
-  #                 as.Date('2021-03-01'))
-  # 
-  # # Loop for each file
-  # for (i in 1:length(files)){
-  #   # Opening raster to get number of days
-  #   ncin <- raster(files[i],
-  #                  band = 1,
-  #                  verbose = FALSE,
-  #                  stopIfNotEqualSpaced = FALSE)
-  #   # Getting the number of  days
-  #   N_days <- floor(nbands(ncin)/24)
-  #   # Dates
-  #   Dates <- start_date[i] + (1:N_days) - 1
-  #   # Loop for each day in the year
-  #   for (j in 1:N_days){
-  #     # Getting date
-  #     date <- Dates[j]
-  #     # Looping for each hour in the day
-  #     for (k in (24*(j-1)+1):(24*j)){
-  #       # Opening raster
-  #       ncin <- raster(files[i],
-  #                      band = k,
-  #                      verbose = FALSE,
-  #                      stopIfNotEqualSpaced = FALSE)
-  #       # Cropping for the UK
-  #       ncin <- crop(ncin, extent(-2.755, -1.895, 53.325, 53.695))
-  #       # Saving raster
-  #       writeRaster(ncin,
-  #                   filename = paste('Data/CaseStudy2/Processed/PM25/EMEP/PM25_', date, '-', sprintf("%02d", k %% 24), "00.tif", sep = ''),
-  #                   overwrite = TRUE)
-  #       # else {keep <- keep + ncin}
-  #       print(paste(date, '-', sprintf("%02d", (k - 1) %% 24), "00", sep = ''))
-  #     }
-  #   }
-  # }
-  #########################################################################################################
-  #########################################################################################################
+###################################
+### Preparing PM data from EMEP ###
+###################################
+################### The following code takes a while to run, so population estimates  ###################
+################### were run separately and saved to a raster (found underneath)      ###################
+# # file names
+# files <- c("Data/CaseStudy2/Raw/PM25/EMEP/pm25_janfeb2021_regrid.nc",
+#            "Data/CaseStudy2/Raw/PM25/EMEP/pm25_marapr2021_regrid.nc")
+# 
+# # files start dates
+# start_date <- c(as.Date('2021-01-01'),
+#                 as.Date('2021-03-01'))
+# 
+# # Loop for each file
+# for (i in 1:length(files)){
+#   # Opening raster to get number of days
+#   ncin <- raster(files[i],
+#                  band = 1,
+#                  verbose = FALSE,
+#                  stopIfNotEqualSpaced = FALSE)
+#   # Getting the number of  days
+#   N_days <- floor(nbands(ncin)/24)
+#   # Dates
+#   Dates <- start_date[i] + (1:N_days) - 1
+#   # Loop for each day in the year
+#   for (j in 1:N_days){
+#     # Getting date
+#     date <- Dates[j]
+#     # Looping for each hour in the day
+#     for (k in (24*(j-1)+1):(24*j)){
+#       # Opening raster
+#       ncin <- raster(files[i],
+#                      band = k,
+#                      verbose = FALSE,
+#                      stopIfNotEqualSpaced = FALSE)
+#       # Cropping for the UK
+#       ncin <- crop(ncin, extent(-2.755, -1.895, 53.325, 53.695))
+#       # Saving raster
+#       writeRaster(ncin,
+#                   filename = paste('Data/CaseStudy2/Processed/PM25/EMEP/PM25_', date, '-', sprintf("%02d", k %% 24), "00.tif", sep = ''),
+#                   overwrite = TRUE)
+#       # else {keep <- keep + ncin}
+#       print(paste(date, '-', sprintf("%02d", (k - 1) %% 24), "00", sep = ''))
+#     }
+#   }
+# }
+#########################################################################################################
+#########################################################################################################
 
+prepare_emep <- function(ew_msoa, mcr_msoa, output_dir, processed_dir) {
   # Empty raster
   r0 <- raster(xmn = -2.755,
                xmx = -1.895,
