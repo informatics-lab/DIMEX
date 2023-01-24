@@ -8,8 +8,11 @@ source(here("Code", "CaseStudy2", "0_Source.R"))
 # TODO: Remove dependence of calling directory location
 main <- function(output_dir, prefix_dir) {
 
+  processed_dir = file.path(prefix_dir, "Data/CaseStudy2/Processed")
+  ground_monitors_dir = file.path(prefix_dir, "Data/CaseStudy2/Raw/PM25/GroundMonitors")
+
   # Loading shapefiles 
-  load(file.path(prefix_dir, "Data/CaseStudy2/Processed/Shapefiles/shapefiles.RData"))
+  load(file.path(processed_dir, "Shapefiles/shapefiles.RData"))
 
   stop("DEBUG")
 
@@ -143,7 +146,8 @@ main <- function(output_dir, prefix_dir) {
     # Loop for each time
     for (j in 0:23){
       # Reading in PM25 from CAMS
-      r <- raster(paste('Data/CaseStudy2/Processed/PM25/CAMS-Europe/PM25_', i, '-', sprintf("%02d", j), "00.tif", sep = ''))
+      file_name <- paste('PM25_', i, '-', sprintf("%02d", j), "00.tif", sep = '')
+      r <- raster(file.path(processed_dir, 'PM25/CAMS-Europe', file_name))
       # Renaming raster
       names(r) <- 'pm25'
       # Creating aggregated estimates of PM25 by MSOA
@@ -193,12 +197,12 @@ main <- function(output_dir, prefix_dir) {
   mcr_msoa <- spTransform(mcr_msoa, CRS("+proj=longlat +datum=WGS84 +no_defs"))
 
   # Reading in LTN network data
-  tmp1 <- read.csv('Data/CaseStudy2/Raw/PM25/GroundMonitors/BroomLane_AQ_hourly.csv')
-  tmp2 <- read.csv('Data/CaseStudy2/Raw/PM25/GroundMonitors/CromwellAQ_hourly.csv')
-  tmp3 <- read.csv('Data/CaseStudy2/Raw/PM25/GroundMonitors/DelamereRoad_AQ_hourly.csv')
-  tmp4 <- read.csv('Data/CaseStudy2/Raw/PM25/GroundMonitors/GrangethorpeAQ_2b_hourly.csv')
-  tmp5 <- read.csv('Data/CaseStudy2/Raw/PM25/GroundMonitors/ManorRad_AQ_hourly.csv')
-  tmp6 <- read.csv('Data/CaseStudy2/Raw/PM25/GroundMonitors/SladeLane_AQ_hourly.csv')
+  tmp1 <- read.csv(file.path(ground_monitors_dir, 'BroomLane_AQ_hourly.csv'))
+  tmp2 <- read.csv(file.path(ground_monitors_dir, 'CromwellAQ_hourly.csv'))
+  tmp3 <- read.csv(file.path(ground_monitors_dir, 'DelamereRoad_AQ_hourly.csv'))
+  tmp4 <- read.csv(file.path(ground_monitors_dir, 'GrangethorpeAQ_2b_hourly.csv'))
+  tmp5 <- read.csv(file.path(ground_monitors_dir, 'ManorRad_AQ_hourly.csv'))
+  tmp6 <- read.csv(file.path(ground_monitors_dir, 'SladeLane_AQ_hourly.csv'))
 
   # Adding Longitude
   tmp1$latitude <- 53.441161
@@ -542,7 +546,8 @@ main <- function(output_dir, prefix_dir) {
     # Loop for each time
     for (j in 0:23){
       # Reading in PM25 from CAMS
-      r <- raster(paste('Data/CaseStudy2/Processed/PM25/EMEP/PM25_', i, '-', sprintf("%02d", j), "00.tif", sep = ''))
+      file_name <- paste('PM25_', i, '-', sprintf("%02d", j), "00.tif", sep = '')
+      r <- raster(file.path(processed_dir, 'PM25/EMEP', file_name))
       # Renaming raster
       names(r) <- 'pm25'
       # Creating aggregated estimates of PM25 by MSOA
