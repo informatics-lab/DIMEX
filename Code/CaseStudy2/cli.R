@@ -8,7 +8,11 @@ cli <- function() {
                 help = "DIMEX processing step"),
     make_option(c("--prefix"),
                 default = "~/Dropbox/Github/SPFFinalReport",
-                help = "top-level directory containing Code/ and Data/")
+                help = "top-level directory containing Code/ and Data/"),
+    make_option(c("--output-dir"),
+                dest="output_dir",
+                default = "Data/Processed/PM25",
+                help = "Output directory")
   )) %>%
   parse_args %>%
   validate_args
@@ -51,7 +55,7 @@ script_name <- function(step) {
 }
 
 # Main program
-main <- function() {
+main_wrapper <- function() {
   opts <- cli()
 
   # Working directory
@@ -59,7 +63,10 @@ main <- function() {
 
   # Run particular step
   source(here("Code", "CaseStudy2", script_name(opts$step)))
+
+  # Run the loaded main program
+  main(opts$output_dir)
   
 }
 
-main()
+main_wrapper()
