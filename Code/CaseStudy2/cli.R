@@ -58,14 +58,12 @@ script_name <- function(step) {
 main_wrapper <- function() {
   opts <- cli()
 
-  # Working directory
-  setwd(opts$prefix)
-
   # Run particular step
   source(here("Code", "CaseStudy2", script_name(opts$step)))
 
   # Run the loaded main program
-  main(opts$output_dir)
+  main(output_dir = opts$output_dir,
+       prefix_dir = opts$prefix)
   
 }
 

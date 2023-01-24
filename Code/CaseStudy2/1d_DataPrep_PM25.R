@@ -6,12 +6,12 @@ library(here)
 source(here("Code", "CaseStudy2", "0_Source.R"))
 
 # TODO: Remove dependence of calling directory location
-main <- function(output_dir) {
-  print(output_dir)
-  stop("DEBUG")
+main <- function(output_dir, prefix_dir) {
 
   # Loading shapefiles 
-  load("Data/CaseStudy2/Processed/Shapefiles/shapefiles.RData")
+  load(file.path(prefix_dir, "Data/CaseStudy2/Processed/Shapefiles/shapefiles.RData"))
+
+  stop("DEBUG")
 
   ##########################################
   ### Preparing PM data from CAMS-Europe ###
