@@ -94,9 +94,18 @@ main <- function(output_dir, prefix_dir) {
   stop("DEBUG")
 
   # TODO: allow user to select particular data source
-  prepare_cams()
-  prepare_aurn()
-  prepare_emep()
+
+  # Save cams
+  pm25_cams <- prepare_cams()
+  save(pm25_cams, file = file.path(output_dir, "pm25_cams.RData"))
+
+  # Save aurn data
+  pm25_gm <- prepare_aurn()
+  save(pm25_gm, file = file.path(output_dir, "pm25_gm.RData"))
+
+  # Save aurn data
+  pm25_emep <- prepare_emep()
+  save(pm25_emep, file = file.path(output_dir, "pm25_emep.RData"))
 }
 
 prepare_cams <- function() {
@@ -191,9 +200,7 @@ prepare_cams <- function() {
     }
   }
 
-  # Save cams
-  save(pm25_cams, file = file.path(output_dir, "pm25_cams.RData"))
-  
+  pm25_cams  
 }
 
 prepare_aurn <- function() {
@@ -452,8 +459,7 @@ prepare_aurn <- function() {
   rm(tmp1, tmp2, tmp3, aurn_dat, gm_dat, ltn_dat, mcr_msoa,
      stations_aurn_dat, stations_gm_dat, stations_ltn_dat)
 
-  # Save aurn data
-  save(pm25_gm, file = file.path(output_dir, "pm25_gm.RData"))
+  pm25_gm
 }
 
 ###################################
@@ -505,7 +511,7 @@ prepare_aurn <- function() {
 #########################################################################################################
 #########################################################################################################
 
-prepare_emep <- function(ew_msoa, mcr_msoa, output_dir, processed_dir) {
+prepare_emep <- function() {
   # Empty raster
   r0 <- raster(xmn = -2.755,
                xmx = -1.895,
@@ -597,6 +603,5 @@ prepare_emep <- function(ew_msoa, mcr_msoa, output_dir, processed_dir) {
     }
   }
 
-  # Save aurn data
-  save(pm25_emep, file = file.path(output_dir, "pm25_emep.RData"))
+  pm25_emep
 }
