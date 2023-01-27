@@ -27,8 +27,6 @@ calculate_household <- function(act_dat,
               by = 'pop_id') %>%
 	as.data.frame()
   
-  print(act_dat)
-  
   # Getting number of population 
   Npop <- length(unique(act_dat$pop_id))
   
@@ -37,17 +35,12 @@ calculate_household <- function(act_dat,
   
   # Getting initial level of hou
   act_dat[which(act_dat$uniid == 1), outvar] <- rnorm(n = Npop, mean = 12, sd = 2)
-  
-  print(act_dat)
-  
+
   # Loop for each time point 
   for (i in 2:max(act_dat$uniid)){
     # Getting time point and previous time point
     tmp1 <- subset(act_dat, uniid == i)
-    
-    print(i)
-    print(tmp1)
-    
+
     # penetration factor (Özkaynak et al. (1996))
     Fp <- rnorm(n = Npop, mean = 1, sd = 0.055)
     
