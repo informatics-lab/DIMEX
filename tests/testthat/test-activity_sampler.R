@@ -1,3 +1,6 @@
 test_that("activity_sampler works", {
-  expect_equal(2 * 2, 4)
+  pop_dat <- data.frame()
+  tus_dat <- data.frame(percmissing = c(0),
+                        weights = c(1))
+  expect_equal(activity_sampler(pop_dat, tus_dat, 0), 4)
 })

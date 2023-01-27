@@ -1,11 +1,14 @@
 #' Sampling activity sequences (Method 1) - Complete sequences only
 #'
+#' @param pop_dat - population data frame
+#' @param tus_dat - time-use survey data frame
 #' @param k - key to index chunk
 #' @return data frame of sampled activities
 #'
 #' @export
-activity_sampler <- function(k) {
+activity_sampler <- function(pop_dat, tus_dat, k) {
   # TODO: Remove dependence on global variables, e.g. pop_dat, tus_dat
+  # NOTE: Could the sampled population be passed in?
   activities_complete <- sample_population(subset(pop_dat, area_id == k), 
                                            subset(tus_dat, percmissing == 0), 
                                            nsample = 100,
