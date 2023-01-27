@@ -22,10 +22,12 @@ calculate_household <- function(act_dat,
     dplyr::mutate(uniid = 1:dplyr::n()) %>%
     dplyr::ungroup() %>%
     dplyr::arrange(date, time, pop_id)  %>%
-    left_join(pop_dat %>%
+    dplyr::left_join(pop_dat %>%
                 dplyr::select(pop_id, housetype),
               by = 'pop_id') %>%
 	as.data.frame()
+  
+  print(act_dat)
   
   # Getting number of population 
   Npop <- length(unique(act_dat$pop_id))
@@ -36,10 +38,15 @@ calculate_household <- function(act_dat,
   # Getting initial level of hou
   act_dat[which(act_dat$uniid == 1), outvar] <- rnorm(n = Npop, mean = 12, sd = 2)
   
+  print(act_dat)
+  
   # Loop for each time point 
   for (i in 2:max(act_dat$uniid)){
     # Getting time point and previous time point
     tmp1 <- subset(act_dat, uniid == i)
+    
+    print(i)
+    print(tmp1)
     
     # penetration factor (Özkaynak et al. (1996))
     Fp <- rnorm(n = Npop, mean = 1, sd = 0.055)
@@ -72,10 +79,10 @@ calculate_household <- function(act_dat,
     }
     
     # calculate volume of home (zoopla + onaverage.co.uk)
-    V <- ((tmp1$housetype == 'detached') + 0) * rtri(Npop, min = 81, max = 214, mode = 159) * runif(1, min = 2.1, max = 2.6) + 
-      ((tmp1$housetype == 'semi-detached') + 0) * rtri(Npop, min = 56, max = 204, mode = 84)  * runif(1, min = 2.1, max = 2.6) + 
-      ((tmp1$housetype == 'terrace') + 0) * rtri(Npop, min = 33, max = 155, mode = 59)  * runif(1, min = 2.1, max = 2.6) + 
-      ((tmp1$housetype == 'flat') + 0) * rtri(Npop, min = 34, max = 106, mode = 41)  * runif(1, min = 2.1, max = 2.6)
+    V <- ((tmp1$housetype == 'detached') + 0) * EnvStats::rtri(Npop, min = 81, max = 214, mode = 159) * runif(1, min = 2.1, max = 2.6) + 
+      ((tmp1$housetype == 'semi-detached') + 0) * EnvStats::rtri(Npop, min = 56, max = 204, mode = 84)  * runif(1, min = 2.1, max = 2.6) + 
+      ((tmp1$housetype == 'terrace') + 0) * EnvStats::rtri(Npop, min = 33, max = 155, mode = 59)  * runif(1, min = 2.1, max = 2.6) + 
+      ((tmp1$housetype == 'flat') + 0) * EnvStats::rtri(Npop, min = 34, max = 106, mode = 41)  * runif(1, min = 2.1, max = 2.6)
     
     # extract ambient concentration
     Cout <- tmp1[, ambient, drop = TRUE]
