@@ -7,10 +7,10 @@
 #' @export
 calculate_indoor <- function(dat, ambient, outvar) {
   # parameters (Normal from Burke et al. (2001) truncated)
-  a <- rtruncnorm(n = nrow(dat), a = 0, mean = 6.467, sd = 2.1)
-  b <- rtruncnorm(n = nrow(dat), a = 0, mean = 0.507, sd = 0.11)
+  a <- truncnorm::rtruncnorm(n = nrow(dat), a = 0, mean = 6.467, sd = 2.1)
+  b <- truncnorm::rtruncnorm(n = nrow(dat), a = 0, mean = 0.507, sd = 0.11)
   # Estimating ambient 
-  dat[,outvar] <- rtruncnorm(n = 1, a = 0, mean = a + b * dat[,ambient, drop = TRUE], sd = 3.467)
+  dat[,outvar] <- truncnorm::rtruncnorm(n = 1, a = 0, mean = a + b * dat[,ambient, drop = TRUE], sd = 3.467)
   # Returning dataset
   return(dat)
 }
