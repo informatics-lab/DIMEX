@@ -22,7 +22,7 @@ sample_population <- function(pop_dat,
                               tus_strata,
                               start_date,
                               end_date,
-							  keep) {
+							                keep) {
   ################
   ### Preamble ###
   ################
@@ -47,11 +47,11 @@ sample_population <- function(pop_dat,
     # Adding label to each strata
     dplyr::mutate(strata = 1:dplyr::n()) %>%
     dplyr::select(-c(n))
-  # Getting activities ID and 
+  # Getting activities ID and
   tus_act_id <- tus_dat %>%
     # Merging on stratification labels
     dplyr::left_join(lst_strata,
-              by = tus_strata) 
+                     by = tus_strata)
   # Normalising the weights within each strata
   tus_act_id <- tus_act_id %>%
     # Merging on summary of weights in each strata
@@ -116,7 +116,7 @@ sample_population <- function(pop_dat,
   activities <- merge(activities, 
                       tus_dat[, c('act_id', 'time', 'time_label', keep)],
                       by = 'act_id') %>%
-    arrange(pop_id, date, time) %>%
+    dplyr::arrange(pop_id, date, time) %>%
 	dplyr::select(-c(sex, agegr4, nssec5, strata))
   # Returning activity samples 
   return(activities)
