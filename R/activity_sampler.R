@@ -23,31 +23,31 @@ activity_sampler <- function(pop_dat, tus_dat, k) {
   # the end of the profiles into the next day
   activities_complete <- activities_complete %>%
     # Getting hour and resting date after 00:00
-    mutate(hour = (floor((time-1)/6) + 4) %% 24,
-           date = if_else(hour %in% 0:3, date + 1, date)) %>%
+    dplyr::mutate(hour = (floor((time-1)/6) + 4) %% 24,
+           date = dplyr::if_else(hour %in% 0:3, date + 1, date)) %>%
     # Removign day information as we have to shift the day
     dplyr::select(-c(day, day_label, daytype, daytype_label, season, season_label)) %>%
     # Adding on day information
-    mutate(day_label = weekdays(date),
+    dplyr::mutate(day_label = weekdays(date),
            day = as.numeric(factor(weekdays(date), levels = c('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'))), 
-           daytype = case_when(day %in% c(1,7) ~ 1,
+           daytype = dplyr::case_when(day %in% c(1,7) ~ 1,
                                day %in% 2:6 ~ 2),
-           daytype_label = case_when(day %in% c(1,7) ~ 'Weekend',
+           daytype_label = dplyr::case_when(day %in% c(1,7) ~ 'Weekend',
                                      day %in% 2:6 ~ 'Weekday'),
-           season = case_when(month(date) %in% c(12, 1, 2) ~ 1,
-                              month(date) %in% c(3:5) ~ 2,
-                              month(date) %in% c(6:8) ~ 3,
-                              month(date) %in% c(9:11) ~ 4),
-           season_label = case_when(month(date) %in% c(12, 1, 2) ~ 'Winter',
-                                    month(date) %in% c(3:5) ~ 'Spring',
-                                    month(date) %in% c(6:8) ~ 'Summer',
-                                    month(date) %in% c(9:11) ~ 'Autumn')) %>%
+           season = dplyr::case_when(lubridate::month(date) %in% c(12, 1, 2) ~ 1,
+                              lubridate::month(date) %in% c(3:5) ~ 2,
+                              lubridate::month(date) %in% c(6:8) ~ 3,
+                              lubridate::month(date) %in% c(9:11) ~ 4),
+           season_label = dplyr::case_when(lubridate::month(date) %in% c(12, 1, 2) ~ 'Winter',
+                                    lubridate::month(date) %in% c(3:5) ~ 'Spring',
+                                    lubridate::month(date) %in% c(6:8) ~ 'Summer',
+                                    lubridate::month(date) %in% c(9:11) ~ 'Autumn')) %>%
     # Removing first day
     dplyr::filter(date >= as.Date('2020-12-01') & date <= as.Date('2021-12-31'))
   
   # Adding micro-environments to the dataset 
   activities_complete <- activities_complete %>%
-    dplyr::mutate(micro_group = case_when(location %in% c(11:12) ~ "home",
+    dplyr::mutate(micro_group = dplyr::case_when(location %in% c(11:12) ~ "home",
                                           location %in% c(13, 14, 15, 16, 17, 19, 20, 21) ~ "indoor",
                                           location %in% c(18, 31, 32) ~ "outdoor",
                                           location %in% c(30, 33:49, 90) ~ "transport"))
