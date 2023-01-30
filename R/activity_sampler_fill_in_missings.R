@@ -1,7 +1,9 @@
-##############################################
-### Filling in missings in the TUS dataset ###
-##############################################
-# Filling in missings using most popular activities
+#' Filling in missings in the Time Use Survey dataset
+#' using most popular activities
+#' 
+#' @param tus_dat - Time use survey data frame that needs processing
+#' @return Time use survey data frame
+#' @export
 fill_in_missings <- function(tus_dat) {
   tus_dat <- tus_dat %>%
     # Setting missings to NA
