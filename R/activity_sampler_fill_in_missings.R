@@ -7,7 +7,7 @@ fill_in_missings <- function(tus_dat) {
     # Setting missings to NA
     dplyr::mutate(location_popular = ifelse(location %in% c(-9, 0, 10, 99), NA, location)) %>%
     # Merging on most popular location for each activity by strata
-    left_join(tus_dat %>%
+    dplyr::left_join(tus_dat %>%
                 # Only keeping non-missing locations
                 filter(!(location %in% c(-9, 0, 10, 99))) %>%
                 # Summarising by stratum and activity
@@ -36,7 +36,7 @@ fill_in_missings <- function(tus_dat) {
     # Removing uncessary columns 
     dplyr::select(-c(tmp))  %>%
     # Merging on most popular location for each activity by strata
-    left_join(tus_dat %>%
+    dplyr::left_join(tus_dat %>%
                 # Only keeping non-missing locations
                 filter(!(location %in% c(-9, 0, 10, 99))) %>%
                 # Summarising by stratum and activity
@@ -65,7 +65,7 @@ fill_in_missings <- function(tus_dat) {
     # Removing uncessary columns 
     dplyr::select(-c(tmp))%>%
     # Merging on location labels
-    left_join(read_csv("Data/Raw/TimeUseSurvey/uktus_metadata_location.csv") %>%
+    dplyr::left_join(read_csv("Data/Raw/TimeUseSurvey/uktus_metadata_location.csv") %>%
                 dplyr::select(location_popular = location, 
                               location_popular_label = location_label),
               by = 'location_popular')
