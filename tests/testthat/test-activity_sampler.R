@@ -7,14 +7,7 @@ test_that("activity_sampler works", {
     pop_id = c(1:n),
     sex = rep(0, each = n),
     agegr4 = rep(0, each = n),
-    nssec5 = rep(0, each = n),
-    daytype = rep(2, each = n),  # daytype must be 1:7
-    pop_id = rep(1, each = n),
-    act_id = rep(1, each = n),
-    time = rep(0, each = n),
-    time_label = rep(0, each = n),
-    activity = rep(0, each = n),
-    activity_label = rep(0, each = n)
+    nssec5 = rep(0, each = n)
   )
   
   # Minimal Time-Use Survey data.frame
@@ -24,13 +17,15 @@ test_that("activity_sampler works", {
                         sex = rep(0, each = n),
                         agegr4 = rep(0, each = n),
                         nssec5 = rep(0, each = n),
-                        daytype = rep(2, each = n),  # daytype must be 1:7
                         pop_id = c(1:n),
                         act_id = rep(1, each = n),
+                        daytype = rep(1:7, each = 15)[1:100],
                         time = rep(0, each = n),
                         time_label = rep(0, each = n),
                         activity = rep(0, each = n),
-                        activity_label = rep(0, each = n)
+                        activity_label = rep(0, each = n),
+                        location = rep(0, each = n),
+                        location_label = rep(0, each = n)
                         )
   
   # System under test  
