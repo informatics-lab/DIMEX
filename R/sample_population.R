@@ -69,7 +69,8 @@ sample_population <- function(pop_dat,
   # Sampling population to find exposures for
   pop_dat2 <- pop_dat %>%
     dplyr::group_by_at(.vars = pop_strata) %>%
-    dplyr::sample_n(size = nsample, 
+    print() %>%
+    dplyr::sample_n(size = nsample,
              replace = FALSE)
   # Preparing shell dataset for sampling 
   activities <- expand.grid(pop_id = pop_dat2$pop_id,
