@@ -4,9 +4,17 @@
 \alias{activity_sampler}
 \title{Sampling activity sequences (Method 1) - Complete sequences only}
 \usage{
-activity_sampler(k)
+activity_sampler(pop_dat, tus_dat, k)
 }
 \arguments{
+\item{pop_dat}{\itemize{
+\item population data frame
+}}
+
+\item{tus_dat}{\itemize{
+\item time-use survey data frame
+}}
+
 \item{k}{\itemize{
 \item key to index chunk
 }}
