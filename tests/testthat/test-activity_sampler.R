@@ -10,12 +10,20 @@ test_that("activity_sampler works", {
   )
   
   # Minimal Time-Use Survey data.frame
-  tus_dat <- data.frame(percmissing = c(0, 0),
-                        weights_diary = c(1, 1),
-                        sex = c(0, 0),
-                        agegr4 = c(0, 0),
-                        nssec5 = c(0, 0),
-                        daytype = c(0, 0)
+  # This is a very complex spec to track down by just reading the code
+  n <- 100
+  tus_dat <- data.frame(percmissing = rep(0, each = n),
+                        weights_diary = rep(1, each = n),
+                        sex = rep(0, each = n),
+                        agegr4 = rep(0, each = n),
+                        nssec5 = rep(0, each = n),
+                        daytype = rep(0, each = n),
+                        pop_id = rep(1, each = n),
+                        act_id = rep(1, each = n),
+                        time = rep(0, each = n),
+                        time_label = rep(0, each = n),
+                        activity = rep(0, each = n),
+                        activity_label = rep(0, each = n)
                         )
   
   # System under test  
