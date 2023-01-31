@@ -31,5 +31,26 @@ test_that("activity_sampler works", {
   # System under test  
   actual <- activity_sampler(population, tus_dat, msoa_id)
 
-  expect_equal(actual, 4)
+  # Assertions
+  expected <- data.frame(
+    act_id <- c(),
+    pop_id <- c(),
+    date <- c(),
+    time <- c(),
+    time_label <- c(),
+    activity <- c(),
+    activity_label <- c(),
+    location <- c(),
+    location_label <- c(),
+    hour <- c(),
+    day_label <- c(),
+    day <- c(),
+    daytype <- c(),
+    daytype_labe <- c(),
+    season <- c(),
+    season_label <- c(),
+    micro_group <- c()
+  )
+
+  expect_equal(actual, expected)
 })
