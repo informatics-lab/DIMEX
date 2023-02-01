@@ -1,4 +1,6 @@
 test_that("activity_sampler works", {
+  # WARNING: This is a long running test
+
   # Minimal population data.frame
   msoa_id = 2
   n <- 100
@@ -28,11 +30,15 @@ test_that("activity_sampler works", {
                         location_label = rep(0, each = n)
                         )
   
-  # System under test  
+  # System under test
+  set.seed(1409)
   actual <- activity_sampler(population, tus_dat, msoa_id)
 
   # Assertions
-  ones <- rep(1, each = 100)
+  magic_number <- 649100  # Sensitive to seed value
+  ones <- rep(1, each = magic_number)
+  
+  # NOTE: these are not the actual values of the activity_sampler
   expected <- data.frame(
     act_id = ones,
     pop_id = ones,
@@ -47,12 +53,16 @@ test_that("activity_sampler works", {
     day_label = ones,
     day = ones,
     daytype = ones,
-    daytype_labe = ones,
+    daytype_label = ones,
     season = ones,
     season_label = ones,
     micro_group = ones
   )
 
+  # NOTE: Too many asserts is a code smell. It would be better if the system
+  #       under test produced a more intuitive result
+  expect_equal(nrow(actual), magic_number)
+  expect_equal(colnames(actual), colnames(expected))
   expect_equal(actual$act_id, expected$act_id)
   # expect_equal(actual, expected)
 })

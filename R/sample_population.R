@@ -71,7 +71,6 @@ sample_population <- function(pop_dat,
     dplyr::group_by_at(.vars = pop_strata) %>%
     dplyr::sample_n(size = nsample,
                     replace = FALSE)
-  print(lst_strata)
   # Preparing shell dataset for sampling 
   activities <- expand.grid(pop_id = pop_dat2$pop_id,
                             date = seq(as.Date(start_date), as.Date(end_date), by = 1)) %>%
