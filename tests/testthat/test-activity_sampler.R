@@ -35,8 +35,8 @@ test_that("activity_sampler works", {
   actual <- activity_sampler(population, tus_dat, msoa_id)
 
   # Assertions
-  magic_number <- 649100  # Sensitive to seed value
-  ones <- rep(1, each = magic_number)
+  n_samples_magic_number <- 649100  # Sensitive to seed value
+  ones <- rep(1, each = n_samples_magic_number)
   
   # NOTE: these are not the actual values of the activity_sampler
   expected <- data.frame(
