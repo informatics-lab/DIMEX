@@ -19,7 +19,7 @@ test_that("fill_in_missings works", {
 })
 
 
-test_that("popular locations functionality", {
+test_that("snippet from fill_in_missings converts missing values to NA", {
   location <- c(1, 2, 3, -9)  # missing values -9, 0, 10 or 99
   frame <- data.frame(location = location)
   actual <- frame %>%
@@ -32,7 +32,7 @@ test_that("popular locations functionality", {
 test_that("uktus_metadata_location shipped with code", {
   expect_true(exists("uktus_metadata_location"))
   expect_equal(uktus_metadata_location$location, c(0, 10:21, 30:49, 90, 99, -9, -7, -2))
-  expect_equal(uktus_metadata_location$location_label[0:3], c(
+  expect_equal(uktus_metadata_location$location_label[1:3], c(
     "Unspecified location",
     "Unspecified location (not travelling)",
     "Home"
