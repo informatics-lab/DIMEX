@@ -3,40 +3,48 @@ test_that("activity_sampler works", {
 
   # Minimal population data.frame
   msoa_id <- 2
-  n <- 100
+  sample_size <- 21 # Related to days in week for now
+  start_date <- "2020-11-30"
+  end_date <- "2021-12-31"
+
   population <- data.frame(
-    area_id = rep(msoa_id, each = n), # Sample size is hard-coded to 100
-    pop_id = c(1:n),
-    sex = rep(0, each = n),
-    agegr4 = rep(0, each = n),
-    nssec5 = rep(0, each = n)
+    area_id = msoa_id,
+    pop_id = c(1:sample_size),
+    sex = 0,
+    agegr4 = 0,
+    nssec5 = 0
   )
 
   # Minimal Time-Use Survey data.frame
   # This is a very complex spec to track down by just reading the code
   tus_dat <- data.frame(
-    percmissing = rep(0, each = n),
-    weights_diary = rep(1, each = n),
-    sex = rep(0, each = n),
-    agegr4 = rep(0, each = n),
-    nssec5 = rep(0, each = n),
-    pop_id = c(1:n),
-    act_id = rep(1, each = n),
-    daytype = rep(1:7, each = 15)[1:100],
-    time = rep(0, each = n),
-    time_label = rep(0, each = n),
-    activity = rep(0, each = n),
-    activity_label = rep(0, each = n),
-    location = rep(0, each = n),
-    location_label = rep(0, each = n)
+    percmissing = 0,
+    weights_diary = 1,
+    sex = 0,
+    agegr4 = 0,
+    nssec5 = 0,
+    pop_id = c(1:sample_size),
+    act_id = 1,
+    daytype = rep(1:7, each = 15)[1:sample_size],
+    time = 0,
+    time_label = 0,
+    activity = 0,
+    activity_label = 0,
+    location = 0,
+    location_label = 0
   )
 
   # System under test
   set.seed(1409)
-  actual <- activity_sampler(population, tus_dat, msoa_id)
+  actual <- activity_sampler(population,
+    tus_dat, msoa_id,
+    start_date = start_date,
+    end_date = end_date,
+    sample_size = sample_size
+  )
 
   # Assertions
-  n_samples_magic_number <- 649100 # Sensitive to seed value
+  n_samples_magic_number <- 27006 # Sensitive to seed value
   ones <- rep(1, each = n_samples_magic_number)
 
   # NOTE: these are not the actual values of the activity_sampler

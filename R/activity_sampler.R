@@ -6,17 +6,17 @@
 #' @return data frame of sampled activities
 #'
 #' @export
-activity_sampler <- function(pop_dat, tus_dat, k) {
+activity_sampler <- function(pop_dat, tus_dat, k, start_date = "2020-11-30", end_date = "2021-12-31", sample_size = 100) {
   # TODO: Remove dependence on global variables, e.g. pop_dat, tus_dat
   # NOTE: Could the sampled population be passed in?
   activities_complete <- sample_population(subset(pop_dat, area_id == k),
     subset(tus_dat, percmissing == 0),
-    nsample = 100,
+    nsample = sample_size,
     weights = "weights_diary",
     pop_strata = c("area_id"),
     tus_strata = c("sex", "agegr4", "nssec5", "daytype"),
-    start_date = "2020-11-30",
-    end_date = "2021-12-31",
+    start_date = start_date,
+    end_date = end_date,
     keep = c("activity", "activity_label", "location", "location_label")
   )
 
@@ -56,7 +56,7 @@ activity_sampler <- function(pop_dat, tus_dat, k) {
       )
     ) %>%
     # Removing first day
-    dplyr::filter(date >= as.Date("2020-12-01") & date <= as.Date("2021-12-31"))
+    dplyr::filter(date >= as.Date("2020-12-01") & date <= as.Date(end_date))
 
   # Adding micro-environments to the dataset
   activities_complete <- activities_complete %>%
