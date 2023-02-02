@@ -61,7 +61,7 @@ test_that("activity_sampler works", {
 
   # NOTE: Too many asserts is a code smell. It would be better if the system
   #       under test produced a more intuitive result
-  expect_equal(nrow(actual), magic_number)
+  expect_equal(nrow(actual), n_samples_magic_number)
   expect_equal(colnames(actual), colnames(expected))
   expect_equal(actual$act_id, expected$act_id)
   # expect_equal(actual, expected)
