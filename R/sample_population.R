@@ -119,6 +119,7 @@ sample_population <- function(pop_dat,
   return(activities)
 }
 
+# NOTE: Complicated snippet that is hard to reason about
 sample_within_strata <- function(activities, tus_act_id, i) {
       sample(x = tus_act_id$act_id[which(tus_act_id$strata == i)], 
              size = length(activities$pop_id[which(activities$strata == i)]),
