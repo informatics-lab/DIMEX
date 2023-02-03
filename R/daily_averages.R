@@ -7,7 +7,7 @@
 daily_averages <- function(activities_complete)
   activities_complete <- activities_complete %>%
     # Only keeping Q1 2021
-    filter(date >= as.Date("2021-01-01")) %>%
+    dplyr::filter(date >= as.Date("2021-01-01")) %>%
     # Getting exposures 
     dplyr::mutate(exposure_cams = ifelse(micro_group == "outdoor", pm25_cams_agg,
                                   ifelse(micro_group == "indoor", pm25_cams_agg_inh,
@@ -22,9 +22,9 @@ daily_averages <- function(activities_complete)
                                          ifelse(micro_group == "transport", pm25_five_tns,
                                                 ifelse(micro_group == "home", pm25_five_hhd, NA)))))%>%
        # Averaging by day
-    plyr::ddply(.(area_id, pop_id, date, daytype, daytype_label, season, season_label,
+    plyr::ddply(plyr::.(area_id, pop_id, date, daytype, daytype_label, season, season_label,
             sex, sex_label, agegr4, agegr4_label, nssec5, nssec5_label),
-          summarize,
+          plyr::summarize,
           exposure_cams = mean(exposure_cams),
           exposure_emep = mean(exposure_emep),
           exposure_five = mean(exposure_five),
