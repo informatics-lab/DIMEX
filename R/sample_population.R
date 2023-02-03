@@ -39,7 +39,7 @@ sample_population <- function(pop_dat,
   ########################
   # Getting a list of strata for activities 
   lst_strata <- tus_dat %>% 
-    strata_list(tus_strata)
+    stratify_by_column(tus_strata)
   # Getting activities ID and
   tus_act_id <- tus_dat %>%
     # Merging on stratification labels
@@ -100,35 +100,30 @@ sample_population <- function(pop_dat,
   for (i in unique(activities$strata)){
     # Sampling within each strata
     activities$act_id[which(activities$strata == i)] <- 
-      sample_within_strata(activities, tus_act_id, i)
+      sample(x = tus_act_id$act_id[which(tus_act_id$strata == i)], 
+             size = length(activities$pop_id[which(activities$strata == i)]),
+             prob = tus_act_id$weights[which(tus_act_id$strata == i)],
+             replace = TRUE)
   }
   # Merging on the activity data 
   activities <- merge(activities, 
                       tus_dat[, c('act_id', 'time', 'time_label', keep)],
                       by = 'act_id') %>%
     dplyr::arrange(pop_id, date, time) %>%
-	dplyr::select(-c(sex, agegr4, nssec5, strata))
+	  dplyr::select(-c(sex, agegr4, nssec5, strata))
   # Returning activity samples 
   return(activities)
 }
 
-strata_list <- function(tus_dat, tus_strata) {
-  # Getting a list of strata for activities 
-  tus_dat %>% 
+# Group by vars and assign integer to each group in a new column called strata
+stratify_by_column <- function(frame, column_names) {
+  frame %>% 
     # Grouping by stratification variables
-    dplyr::group_by_at(.vars = tus_strata)%>% 
+    dplyr::group_by_at(.vars = column_names)%>% 
     # Summarising 
     dplyr::summarise(n = dplyr::n()) %>%
     dplyr::ungroup() %>%
     # Adding label to each strata
     dplyr::mutate(strata = 1:dplyr::n()) %>%
     dplyr::select(-c(n))
-}
-
-# NOTE: Complicated snippet that is hard to reason about
-sample_within_strata <- function(activities, tus_act_id, i) {
-      sample(x = tus_act_id$act_id[which(tus_act_id$strata == i)], 
-             size = length(activities$pop_id[which(activities$strata == i)]),
-             prob = tus_act_id$weights[which(tus_act_id$strata == i)],
-             replace = TRUE)
 }

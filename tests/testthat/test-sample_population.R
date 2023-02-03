@@ -108,23 +108,23 @@ test_that("comfirm sample_population behaviour given realistic inputs", {
   expect_equal(nrow(actual), 161406)
 })
 
-test_that("strata list given a single key", {
-  tus_dat <- data.frame(foo = c(41, 42, 43))
-  tus_strata <- c("foo")
-  actual <- strata_list(tus_dat, tus_strata)
+test_that("stratify_by_column given a single key", {
+  frame <- data.frame(foo = c(41, 42, 43))
+  column_names <- c("foo")
+  actual <- stratify_by_column(frame, column_names)
   expected <- tibble::tibble(
-    foo = tus_dat$foo,
+    foo = frame$foo,
     strata = c(1, 2, 3)
   )
   expect_equal(actual, expected)
 })
 
-test_that("strata list given duplicates removes duplicates", {
+test_that("stratify_by_column given duplicates removes duplicates", {
   duplicate_foo <- c(1, 2, 3, 3)
   unique_foo <- c(1, 2, 3)
-  tus_dat <- data.frame(foo = duplicate_foo)
-  tus_strata <- c("foo")
-  actual <- strata_list(tus_dat, tus_strata)
+  frame <- data.frame(foo = duplicate_foo)
+  column_names <- c("foo")
+  actual <- stratify_by_column(frame, column_names)
   expected <- tibble::tibble(
     foo = unique_foo,
     strata = unique_foo
@@ -132,14 +132,14 @@ test_that("strata list given duplicates removes duplicates", {
   expect_equal(actual, expected)
 })
 
-test_that("strata list given multiple keys", {
+test_that("stratify_by_column given multiple keys", {
   # Unique combinations of strata keys are kept
-  tus_dat <- data.frame(foo = c(12, 13, 13), bar = c("A", "B", "C"))
-  tus_strata <- c("foo", "bar")
-  actual <- strata_list(tus_dat, tus_strata)
+  frame <- data.frame(foo = c(12, 13, 13), bar = c("A", "B", "C"))
+  column_names <- c("foo", "bar")
+  actual <- stratify_by_column(frame, column_names)
   expected <- tibble::tibble(
-    foo = tus_dat$foo,
-    bar = tus_dat$bar,
+    foo = frame$foo,
+    bar = frame$bar,
     strata = c(1, 2, 3)
   )
   expect_equal(actual, expected)
