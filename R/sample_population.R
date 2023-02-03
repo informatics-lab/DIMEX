@@ -107,10 +107,7 @@ sample_population <- function(pop_dat,
   for (i in unique(activities$strata)){
     # Sampling within each strata
     activities$act_id[which(activities$strata == i)] <- 
-      sample(x = tus_act_id$act_id[which(tus_act_id$strata == i)], 
-             size = length(activities$pop_id[which(activities$strata == i)]),
-             prob = tus_act_id$weights[which(tus_act_id$strata == i)],
-             replace = TRUE)
+      sample_within_strata(activities, tus_act_id, i)
   }
   # Merging on the activity data 
   activities <- merge(activities, 
@@ -120,4 +117,11 @@ sample_population <- function(pop_dat,
 	dplyr::select(-c(sex, agegr4, nssec5, strata))
   # Returning activity samples 
   return(activities)
+}
+
+sample_within_strata <- function(activities, tus_act_id, i) {
+      sample(x = tus_act_id$act_id[which(tus_act_id$strata == i)], 
+             size = length(activities$pop_id[which(activities$strata == i)]),
+             prob = tus_act_id$weights[which(tus_act_id$strata == i)],
+             replace = TRUE)
 }
