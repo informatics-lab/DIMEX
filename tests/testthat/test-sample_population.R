@@ -44,9 +44,11 @@ test_that("sample_population", {
   expect_equal(actual$pop_id, c(0, 0, 0, 0))
 })
 
-test_that("comfirm sample_population behaviour given realistic inputs", {
+test_that("stress test population sampler to understand limitations", {
   sample_size <- 1
-  msoa_id <- "FOO"
+
+  # Synthetic population dataset
+  msoa_id <- "FAKE_MSOA_ID"
   population <- data.frame(
     area_id = msoa_id,
     pop_id = c(1:sample_size),
@@ -75,27 +77,33 @@ test_that("comfirm sample_population behaviour given realistic inputs", {
 
   # System under test
   set.seed(1409)
+  a_date <- "2020-11-30"
   actual <- sample_population(population, time_use_survey,
     nsample = sample_size,
     weights = "weights_diary",
     pop_strata = c("area_id"),
     tus_strata = c("sex", "agegr4", "nssec5", "daytype"),
-    start_date = "2020-11-30",
-    end_date = "2020-11-30",
+    start_date = a_date,
+    end_date = a_date,
     keep = c("activity", "activity_label", "location", "location_label")
   )
 
   # Expectation (column order important for data.frame equals)
+  date <- as.Date(a_date)
+  day <- day_number(date)
+  day_label <- weekdays(date)
+  daytype <- day_type(day)
+  daytype_label <- day_type_label(day)
   expected <- data.frame(
     act_id = 1,
     pop_id = 1,
-    date = as.Date("2020-11-30"),
-    day_label = "Monday",
-    day = 2,
-    daytype = 2,
-    daytype_label = "Weekday",
-    season = 4,
-    season_label = "Autumn",
+    date = date,
+    day_label = day_label,
+    day = day,
+    daytype = daytype,
+    daytype_label = daytype_label,
+    season = season(lubridate::month(date)),
+    season_label = season_label(lubridate::month(date)),
     time = 0,
     time_label = 0,
     activity = 0,
