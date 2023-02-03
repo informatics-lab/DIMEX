@@ -38,12 +38,12 @@ sample_population <- function(pop_dat,
   ### Getting metadata ###
   ########################
   # Getting a list of strata for activities
-  lst_strata <- tus_dat %>%
+  stratification_labels <- tus_dat %>%
     stratify_by_column(tus_strata)
   # Getting activities ID and
   tus_act_id <- tus_dat %>%
     # Merging on stratification labels
-    dplyr::left_join(lst_strata,
+    dplyr::left_join(stratification_labels,
       by = tus_strata
     )
   # Normalising the weights within each strata
@@ -90,11 +90,11 @@ sample_population <- function(pop_dat,
       by = "pop_id"
     ) %>%
     # Merging on stratification labels
-    dplyr::left_join(lst_strata,
+    dplyr::left_join(stratification_labels,
       by = tus_strata
     )
   # Removing unecessary datasets
-  rm(pop_dat2, lst_strata)
+  rm(pop_dat2, stratification_labels)
   ###################################
   ### Sampling activity sequences ###
   ###################################
