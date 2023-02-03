@@ -33,27 +33,11 @@ activity_sampler <- function(pop_dat, tus_dat, k, start_date = "2020-11-30", end
     # Adding on day information
     dplyr::mutate(
       day_label = weekdays(date),
-      day = as.numeric(factor(weekdays(date), levels = c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))),
-      daytype = dplyr::case_when(
-        day %in% c(1, 7) ~ 1,
-        day %in% 2:6 ~ 2
-      ),
-      daytype_label = dplyr::case_when(
-        day %in% c(1, 7) ~ "Weekend",
-        day %in% 2:6 ~ "Weekday"
-      ),
-      season = dplyr::case_when(
-        lubridate::month(date) %in% c(12, 1, 2) ~ 1,
-        lubridate::month(date) %in% c(3:5) ~ 2,
-        lubridate::month(date) %in% c(6:8) ~ 3,
-        lubridate::month(date) %in% c(9:11) ~ 4
-      ),
-      season_label = dplyr::case_when(
-        lubridate::month(date) %in% c(12, 1, 2) ~ "Winter",
-        lubridate::month(date) %in% c(3:5) ~ "Spring",
-        lubridate::month(date) %in% c(6:8) ~ "Summer",
-        lubridate::month(date) %in% c(9:11) ~ "Autumn"
-      )
+      day = day_number(date),
+      daytype = day_type(day),
+      daytype_label = day_type_label(day),
+      season = season(lubridate::month(date)),
+      season_label = season_label(lubridate::month(date))
     ) %>%
     # Removing first day
     dplyr::filter(date >= as.Date("2020-12-01") & date <= as.Date(end_date))

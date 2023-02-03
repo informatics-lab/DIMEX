@@ -122,47 +122,6 @@ sample_population <- function(pop_dat,
   return(activities)
 }
 
-# Type of day in terms of a number
-day_type <- function(day) {
-  dplyr::case_when(
-    day %in% c(1, 7) ~ 1,
-    day %in% 2:6 ~ 2
-  )
-}
-
-# Type of day, either Weekend or Weekday
-day_type_label <- function(day) {
-  dplyr::case_when(
-    day %in% c(1, 7) ~ "Weekend",
-    day %in% 2:6 ~ "Weekday"
-  )
-}
-
-# Day of week in terms of a number
-day_number <- function(date) {
-  as.numeric(factor(weekdays(date), levels = c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")))
-}
-
-# Season
-season <- function(month) {
-  dplyr::case_when(
-    month %in% c(12, 1, 2) ~ 1,
-    month %in% c(3:5) ~ 2,
-    month %in% c(6:8) ~ 3,
-    month %in% c(9:11) ~ 4
-  )
-}
-
-# Season label
-season_label <- function(month) {
-  dplyr::case_when(
-    month %in% c(12, 1, 2) ~ "Winter",
-    month %in% c(3:5) ~ "Spring",
-    month %in% c(6:8) ~ "Summer",
-    month %in% c(9:11) ~ "Autumn"
-  )
-}
-
 # Group by vars and assign integer to each group in a new column called strata
 stratify_by_column <- function(frame, column_names) {
   frame %>%
