@@ -5,7 +5,7 @@
 #' @param pm25_ctm - aggregated dataframe made up of EMEP and CAMS data
 #' @param num_date_start - date range start (numerical value e.g. 18616)
 #' @param num_date_end - date range end (numerical value e.g. 18717)
-#' @return data frame of sampled activities
+#' @return data frame of completed activities
 #'
 #' @export
 
