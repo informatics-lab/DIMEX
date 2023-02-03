@@ -1,16 +1,4 @@
 test_that("daily_averages works", {
-  pm25_cams_agg <- data.frame()
-  pm25_cams_agg_inh <- data.frame()
-  pm25_cams_agg_tns <- data.frame()
-  pm25_cams_agg_hhd <- data.frame()
-  pm25_emep_agg <- data.frame()
-  pm25_emep_agg_inh <- data.frame()
-  pm25_emep_agg_tns <- data.frame()
-  pm25_emep_agg_hhd <- data.frame()
-  pm25_five <- data.frame()
-  pm25_five_inh <- data.frame()
-  pm25_five_tns <- data.frame()
-  pm25_five_hhd <- data.frame()
   activities_complete <- data.frame()
 
   expected <- data.frame()
