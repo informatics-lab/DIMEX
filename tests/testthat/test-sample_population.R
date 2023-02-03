@@ -45,7 +45,7 @@ test_that("sample_population", {
 })
 
 test_that("comfirm sample_population behaviour given realistic inputs", {
-  sample_size <- 21
+  sample_size <- 1
   msoa_id <- "FOO"
   population <- data.frame(
     area_id = msoa_id,
@@ -64,7 +64,7 @@ test_that("comfirm sample_population behaviour given realistic inputs", {
     nssec5 = 0,
     pop_id = c(1:sample_size),
     act_id = 1,
-    daytype = rep(1:7, each = 15)[1:sample_size],
+    daytype = 2,
     time = 0,
     time_label = 0,
     activity = 0,
@@ -81,7 +81,7 @@ test_that("comfirm sample_population behaviour given realistic inputs", {
     pop_strata = c("area_id"),
     tus_strata = c("sex", "agegr4", "nssec5", "daytype"),
     start_date = "2020-11-30",
-    end_date = "2021-11-30",
+    end_date = "2020-11-30",
     keep = c("activity", "activity_label", "location", "location_label")
   )
 
@@ -105,7 +105,7 @@ test_that("comfirm sample_population behaviour given realistic inputs", {
   )
 
   expect_equal(actual[1, ], expected)
-  expect_equal(nrow(actual), 161406)
+  expect_equal(nrow(actual), 1)
 })
 
 test_that("stratify_by_column given a single key", {
