@@ -108,13 +108,39 @@ test_that("comfirm sample_population behaviour given realistic inputs", {
   expect_equal(nrow(actual), 161406)
 })
 
-test_that("strata list", {
-  tus_dat <- data.frame(foo = c(1, 2, 3))
+test_that("strata list given a single key", {
+  tus_dat <- data.frame(foo = c(41, 42, 43))
   tus_strata <- c("foo")
   actual <- strata_list(tus_dat, tus_strata)
   expected <- tibble::tibble(
     foo = tus_dat$foo,
-    strata = tus_dat$foo
+    strata = c(1, 2, 3)
+  )
+  expect_equal(actual, expected)
+})
+
+test_that("strata list given duplicates removes duplicates", {
+  duplicate_foo <- c(1, 2, 3, 3)
+  unique_foo <- c(1, 2, 3)
+  tus_dat <- data.frame(foo = duplicate_foo)
+  tus_strata <- c("foo")
+  actual <- strata_list(tus_dat, tus_strata)
+  expected <- tibble::tibble(
+    foo = unique_foo,
+    strata = unique_foo
+  )
+  expect_equal(actual, expected)
+})
+
+test_that("strata list given multiple keys", {
+  # Unique combinations of strata keys are kept
+  tus_dat <- data.frame(foo = c(12, 13, 13), bar = c("A", "B", "C"))
+  tus_strata <- c("foo", "bar")
+  actual <- strata_list(tus_dat, tus_strata)
+  expected <- tibble::tibble(
+    foo = tus_dat$foo,
+    bar = tus_dat$bar,
+    strata = c(1, 2, 3)
   )
   expect_equal(actual, expected)
 })
