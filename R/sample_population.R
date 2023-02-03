@@ -39,14 +39,7 @@ sample_population <- function(pop_dat,
   ########################
   # Getting a list of strata for activities 
   lst_strata <- tus_dat %>% 
-    # Grouping by stratification variables
-    dplyr::group_by_at(.vars = tus_strata)%>% 
-    # Summarising 
-    dplyr::summarise(n = dplyr::n()) %>%
-    dplyr::ungroup() %>%
-    # Adding label to each strata
-    dplyr::mutate(strata = 1:dplyr::n()) %>%
-    dplyr::select(-c(n))
+    strata_list(tus_strata)
   # Getting activities ID and
   tus_act_id <- tus_dat %>%
     # Merging on stratification labels
@@ -117,6 +110,19 @@ sample_population <- function(pop_dat,
 	dplyr::select(-c(sex, agegr4, nssec5, strata))
   # Returning activity samples 
   return(activities)
+}
+
+strata_list <- function(tus_dat, tus_strata) {
+  # Getting a list of strata for activities 
+  tus_dat %>% 
+    # Grouping by stratification variables
+    dplyr::group_by_at(.vars = tus_strata)%>% 
+    # Summarising 
+    dplyr::summarise(n = dplyr::n()) %>%
+    dplyr::ungroup() %>%
+    # Adding label to each strata
+    dplyr::mutate(strata = 1:dplyr::n()) %>%
+    dplyr::select(-c(n))
 }
 
 # NOTE: Complicated snippet that is hard to reason about
