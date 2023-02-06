@@ -18,22 +18,22 @@ test_that("estimate_exposures", {
                                     season_label = c("Winter", "Winter"),
                                     micro_group = c("home", "home"))
   
-  pop_dat <- data.frame(pop_id = c(0),
-                        housetype = c(0),
-                        area_id = c(0),
-                        sex = c(0),
-                        sex_label = c("female"),
-                        agegr4 = c(1),
-                        agegr4_label = c("<16"),
-                        nssec5 = c(2),
-                        nssec5_label = c("Not applicable"))
+  pop_dat <- data.frame(pop_id = 13,
+                        housetype = "semi-detached",
+                        area_id = as.double("E02000984"),
+                        agegr4 = 4,
+                        agegr4_label = "45-59",
+                        sex = 1,
+                        sex_label = "Male",
+                        nssec5 = 2,
+                        nssec5_label = "Intermediate occupations")
   
-  pm25_ctm <- data.frame(area_id = c(0),
-                         date = as.Date(c("2021-01-01")),
-                         hour = c(0),
-                         pm25_cams_agg = c(5),
-                         pm25_emep_agg = c(5),
-                         pm25_five = c(5))
+  pm25_ctm <- data.frame(area_id = as.double("E02000984"),
+                         date = as.Date("2020-12-20"),
+                         hour = 0,
+                         pm25_cams_agg = 5.404987,
+                         pm25_emep_agg = 5.404987,
+                         pm25_five = 5)
   
   actual <- estimate_exposures(activities_complete, pop_dat, pm25_ctm)
   
