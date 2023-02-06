@@ -1,3 +1,43 @@
+time_use_survey <- function(date,
+                            percent_missing = 0, weights = 1, sex = 1, age = 1,
+                            socio_economic_status = 1) {
+  weekday_or_weekend <- day_type(day_number(date))
+  data.frame(
+    percmissing = percent_missing,
+    weights_diary = weights,
+    sex = sex,
+    agegr4 = age,
+    nssec5 = socio_economic_status,
+    daytype = weekday_or_weekend
+  )
+}
+
+population <- function(msoa) {
+  data.frame(area_id = msoa,
+             pop_id = 1,
+             sex = 1,
+             agegr4 = 6,
+             nssec5 = 5)
+}
+
+test_that("activity_sampler given a single row", {
+  skip("Test activity sequence")
+  msoa <- "E02000984"
+  date_str <- "2021-01-01"
+  date <- as.Date(date_str)
+  sample_size <- 1
+
+  # System under test
+  activities <- activity_sampler(population(msoa), time_use_survey(date), msoa,
+    start_date = date_str,
+    end_date = date_str,
+    sample_size = sample_size
+  )
+
+  # Assertions
+  expect_true(FALSE)
+})
+
 test_that("activity_sampler works", {
   # WARNING: This is a long running test
 
@@ -76,3 +116,30 @@ test_that("activity_sampler works", {
   # expect_equal(actual, expected)
 })
 
+test_that("sample_sequences works", {
+  skip("Test low-level methods")
+  # Activities
+  strata <- c(1, 2, 3)
+  population_id <- c(1, 2, 3)
+  activities <- data.frame(strata = strata,
+                           pop_id = population_id)
+  
+  # Time use survey
+  weights <- 1 / 3
+  strata <- c(1, 2, 3)
+  activity_id <- c(1, 2, 3)
+  time_use_survey_activities <- data.frame(weights = weights,
+                                           strata = strata,
+                                           act_id = activity_id)
+  
+  # System under test
+  sample_sequences(activities, time_use_survey_activities)
+})
+
+test_that("sample_x works", {
+  strata <- 1
+  tus_act_id <- data.frame(strata = c(1, 2, 3),
+                           act_id = c(1, 2, 3))
+  x <- sample_x(tus_act_id, strata)
+  expect_equal(x, 1)
+})

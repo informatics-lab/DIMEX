@@ -6,7 +6,11 @@
 #' @return data frame of sampled activities
 #'
 #' @export
-activity_sampler <- function(pop_dat, tus_dat, k, start_date = "2020-11-30", end_date = "2021-12-31", sample_size = 100) {
+activity_sampler <- function(
+    pop_dat, tus_dat, k,
+    start_date = "2020-11-30",
+    end_date = "2021-12-31",
+    sample_size = 100) {
   # TODO: Remove dependence on global variables, e.g. pop_dat, tus_dat
   # NOTE: Could the sampled population be passed in?
   activities_complete <- sample_population(subset(pop_dat, area_id == k),
