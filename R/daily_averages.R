@@ -13,14 +13,14 @@ daily_averages <- function(activities_complete)
                                   ifelse(micro_group == "indoor", pm25_cams_agg_inh,
                                          ifelse(micro_group == "transport", pm25_cams_agg_tns,
                                                 ifelse(micro_group == "home", pm25_cams_agg_hhd, NA)))),
-           exposure_emep = ifelse(micro_group == "outdoor", pm25_emep_agg,
-                                  ifelse(micro_group == "indoor", pm25_emep_agg_inh,
-                                         ifelse(micro_group == "transport", pm25_emep_agg_tns,
-                                                ifelse(micro_group == "home", pm25_emep_agg_hhd, NA)))),
-           exposure_five = ifelse(micro_group == "outdoor", pm25_five,
-                                  ifelse(micro_group == "indoor", pm25_five_inh,
-                                         ifelse(micro_group == "transport", pm25_five_tns,
-                                                ifelse(micro_group == "home", pm25_five_hhd, NA)))))%>%
+                  exposure_emep = ifelse(micro_group == "outdoor", pm25_emep_agg,
+                                         ifelse(micro_group == "indoor", pm25_emep_agg_inh,
+                                                ifelse(micro_group == "transport", pm25_emep_agg_tns,
+                                                       ifelse(micro_group == "home", pm25_emep_agg_hhd, NA)))),
+                  exposure_five = ifelse(micro_group == "outdoor", pm25_five,
+                                         ifelse(micro_group == "indoor", pm25_five_inh,
+                                                ifelse(micro_group == "transport", pm25_five_tns,
+                                                       ifelse(micro_group == "home", pm25_five_hhd, NA)))))%>%
        # Averaging by day
     plyr::ddply(plyr::.(area_id, pop_id, date, daytype, daytype_label, season, season_label,
             sex, sex_label, agegr4, agegr4_label, nssec5, nssec5_label),

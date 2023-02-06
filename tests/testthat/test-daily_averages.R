@@ -1,7 +1,7 @@
 test_that("daily_averages works", {
   activities_complete <- data.frame(act_id = c(0, 1),
                                     pop_id = c(2, 3),
-                                    date = c("2020-12-20", "2020-12-20"),
+                                    date = c("2021-02-20", "2021-02-20"),
                                     time = c(1, 1),
                                     time_label = c("04:00-04:10", "04:00-04:10"),
                                     activity = c(110, 110),
@@ -37,7 +37,26 @@ test_that("daily_averages works", {
                                     pm25_emep_agg_hhd = c(10.0, 10.0),
                                     pm25_five_hhd = c(10.0, 10.0))
 
-  expected <- data.frame()
+  expected <- data.frame(area_id = c("", ""),
+                         pop_id = c(2, 3),
+                         date = c("2021-02-20", "2021-02-20"),
+                         daytype = c(1, 1),
+                         daytype_label = c("Weekend", "Weekend"),
+                         season = c(1, 1),
+                         season_label = c("Winter", "Winter"),
+                         sex = c(0, 1),
+                         sex_label = c("Female", "Male"),
+                         agegr4 = c(6, 5),
+                         agegr4_label = c("", ""),
+                         nssec5 = c(2, 2),
+                         nssec5_label = c("", ""),
+                         exposure_cams = c(10.0, 10.0),
+                         exposure_emep = c(10.0, 10.0),
+                         exposure_five = c(10.0, 10.0),
+                         pm25_cams_agg = c(1, 1),
+                         pm25_emep_agg = c(1, 1),
+                         pm25_five = c(5, 5))
+
   actual <- daily_averages(activities_complete)
   expect_equal(actual, expected)
 })
