@@ -4,7 +4,7 @@
 #' @return  dataframe of personal daily average exposure estimates
 #'
 #' @export
-daily_averages <- function(activities_complete)
+daily_averages <- function(activities_complete) {
   activities_complete <- activities_complete %>%
     # Only keeping Q1 2021
     dplyr::filter(date >= as.Date("2021-01-01")) %>%
@@ -31,3 +31,6 @@ daily_averages <- function(activities_complete)
           pm25_cams_agg = mean(pm25_cams_agg),
           pm25_emep_agg = mean(pm25_emep_agg),
           pm25_five = mean(pm25_five))
+
+  activities_complete
+}
