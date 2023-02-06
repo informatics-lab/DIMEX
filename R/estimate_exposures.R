@@ -7,12 +7,12 @@
 #'
 #' @export
 
-estimate_exposures <- function(actvities_complete, pop_dat, pm25_ctm) {
+estimate_exposures <- function(activities_complete, pop_dat, pm25_ctm) {
   # Preparing data for exposure modelling
   activities_complete <- activities_complete %>%
     # Only keeping specific period
     # TODO: convert date index to datetime format
-    filter(as.numeric(date) >= 18616 &
+    dplyr::filter(as.numeric(date) >= 18616 &
              as.numeric(date) <= 18717) %>%
     # Adding on demographic variables
     dplyr::left_join(pop_dat %>%
