@@ -1,5 +1,6 @@
 test_that("estimate_exposures", {
   
+  # Example activities data frame including all columns (all required)
   activities_complete <- data.frame(act_id = c(11354, 13473),
                                     pop_id = c(13, 13),
                                     date = as.Date(c("2020-12-20", "2020-12-20")),
@@ -18,6 +19,7 @@ test_that("estimate_exposures", {
                                     season_label = c("Winter", "Winter"),
                                     micro_group = c("home", "home"))
   
+  # Example population data frame containing only required columns
   pop_dat <- data.frame(pop_id = 13,
                         housetype = "semi-detached",
                         area_id = "E02000984",
@@ -28,6 +30,7 @@ test_that("estimate_exposures", {
                         nssec5 = 2,
                         nssec5_label = "Intermediate occupations")
   
+  # Example merged EMEP and CAMS PM2.5 data frame containing only required columns
   pm25_ctm <- data.frame(area_id = "E02000984",
                          date = as.Date("2020-12-20"),
                          hour = 0,
@@ -35,10 +38,12 @@ test_that("estimate_exposures", {
                          pm25_emep_agg = 5,
                          pm25_five = 5)
   
+  # Setting the seed
   set.seed(1409)
   
   actual <- estimate_exposures(activities_complete, pop_dat, pm25_ctm)
   
+  # Change results to two decimal places in order to test against expected values
   actual$pm25_cams_agg_tns <- round(actual$pm25_cams_agg_tns, 2)
   actual$pm25_emep_agg_tns <- round(actual$pm25_emep_agg_tns, 2)
   actual$pm25_five_tns <- round(actual$pm25_five_tns, 2)
@@ -50,7 +55,6 @@ test_that("estimate_exposures", {
   actual$pm25_cams_agg_hhd <- round(actual$pm25_cams_agg_hhd, 2)
   actual$pm25_emep_agg_hhd <- round(actual$pm25_emep_agg_hhd, 2)
   actual$pm25_five_hhd <- round(actual$pm25_five_hhd, 2)
-  
   
   expected <- data.frame(act_id = c(11354, 13473),
                          pop_id = c(13, 13),
