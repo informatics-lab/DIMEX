@@ -113,33 +113,33 @@ sample_population <- function(pop_dat,
 
 # Sample activity sequences
 #
-# Use time use survey activities
+# Use time use survey activities to populate table
+# of sampled activities
 #
 sample_sequences <- function(activities, tus_act_id) {
-  # Empty dataset
+
+  # Reset activity ID column to missing data
   activities$act_id <- as.numeric(NA)
+
   # Loop for each strata
-  for (i in unique(activities$strata)) {
-    # Sampling within each strata
-    activities$act_id[which(activities$strata == i)] <-
-      sample(
-        x = sample_x(tus_act_id, i),
-        size = length(activities$pop_id[which(activities$strata == i)]),
-        prob = sample_probability(tus_act_id, i),
-        replace = TRUE
-      )
+  for (strata_index in unique(activities$strata)) {
+    # Index rows that match strata index
+    tus_row_indices <- which(tus_act_id$strata == strata_index)
+    act_row_indices <- which(activities$strata == strata_index)
+
+    # Sample parameters
+    x <- tus_act_id$act_id[tus_row_indices]
+    prob <- tus_act_id$weights[tus_row_indices]
+    size <- length(activities$pop_id[act_row_indices])
+
+    # Validate sample parameters
+    cat("x:", x, "prob:", prob, "size:", size)
+
+    # Perform sampling and assign to activities frame
+    activities$act_id[act_row_indices] <-
+      sample(x = x, size = size, prob = prob, replace = TRUE)
   }
   activities
-}
-
-# Select candidates related to time use survey activity strata
-sample_x <- function(tus_act_id, i) {
-  tus_act_id$act_id[which(tus_act_id$strata == i)]
-}
-
-# Select probabilities related to time use survey activity strata
-sample_probability <- function(tus_act_id, i) {
-  tus_act_id$weights[which(tus_act_id$strata == i)]
 }
 
 # Group by vars and assign integer to each group in a new column called strata

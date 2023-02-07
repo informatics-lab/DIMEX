@@ -117,7 +117,6 @@ test_that("activity_sampler works", {
 })
 
 test_that("sample_sequences works", {
-  skip("Test low-level methods")
   # Activities
   strata <- c(1, 2, 3)
   population_id <- c(1, 2, 3)
@@ -125,7 +124,7 @@ test_that("sample_sequences works", {
                            pop_id = population_id)
   
   # Time use survey
-  weights <- 1 / 3
+  weights <- c(1, 1, 1)
   strata <- c(1, 2, 3)
   activity_id <- c(1, 2, 3)
   time_use_survey_activities <- data.frame(weights = weights,
@@ -134,12 +133,4 @@ test_that("sample_sequences works", {
   
   # System under test
   sample_sequences(activities, time_use_survey_activities)
-})
-
-test_that("sample_x works", {
-  strata <- 1
-  tus_act_id <- data.frame(strata = c(1, 2, 3),
-                           act_id = c(1, 2, 3))
-  x <- sample_x(tus_act_id, strata)
-  expect_equal(x, 1)
 })
