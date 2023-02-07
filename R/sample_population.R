@@ -63,6 +63,8 @@ sample_population <- function(pop_dat,
   ### Preparing population time profiles ###
   ##########################################
   # Sampling population to find exposures for
+  # Samples within groups of rows defined by pop_strata columns
+  # to create a table of size nsample * ngroups
   pop_dat2 <- pop_dat %>%
     dplyr::group_by_at(.vars = pop_strata) %>%
     dplyr::sample_n(
@@ -114,7 +116,7 @@ sample_population <- function(pop_dat,
 #' Sample activity sequences
 #'
 #' Use time use survey activities to populate table
-#' of sampled activities
+#' of activities
 #'
 #' Note: in this context strata is an integer index representation
 #'       of unique combinations calculated previously
