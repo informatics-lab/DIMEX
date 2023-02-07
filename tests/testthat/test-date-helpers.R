@@ -17,3 +17,29 @@ test_that("day_number", {
   expect_equal(actual, expected)
   expect_equal(dates %>% weekdays, c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
 })
+
+test_that("season", {
+  months <- lubridate::month(c(1:12))
+  actual <- season(months)
+  expected <- c(1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 1)
+  expect_equal(actual, expected)
+})
+
+test_that("season_label", {
+  dates <- seq(as.Date("2021-01-01"), by = "month", length.out = 12)
+  actual <- season_label(lubridate::month(dates))
+  expected <- c("Winter",
+    "Winter",
+    "Spring",
+    "Spring",
+    "Spring",
+    "Summer",
+    "Summer",
+    "Summer",
+    "Autumn",
+    "Autumn",
+    "Autumn",
+    "Winter"
+  )
+  expect_equal(actual, expected)
+})
