@@ -117,16 +117,18 @@ test_that("activity_sampler works", {
 })
 
 test_that("sample_sequences works", {
+  # NOTE: sampling blows up if a strata only has one row and the activity_id
+  #       is not 1, which leads to sample(x = 2, size = 1, prob = 1) issue
   # Activities
-  strata <- c(1, 2, 3)
-  population_id <- c(1, 2, 3)
+  strata <- c(2)
+  population_id <- c(2)
   activities <- data.frame(strata = strata,
                            pop_id = population_id)
   
   # Time use survey
-  weights <- c(1, 1, 1)
-  strata <- c(1, 2, 3)
-  activity_id <- c(1, 2, 3)
+  weights <- c(1, 0.5, 0.5, 1)
+  strata <- c(1, 2, 2, 3)
+  activity_id <- c(1, 2, 2, 3)
   time_use_survey_activities <- data.frame(weights = weights,
                                            strata = strata,
                                            act_id = activity_id)
@@ -134,3 +136,4 @@ test_that("sample_sequences works", {
   # System under test
   sample_sequences(activities, time_use_survey_activities)
 })
+

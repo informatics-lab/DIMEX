@@ -111,17 +111,23 @@ sample_population <- function(pop_dat,
   return(activities)
 }
 
-# Sample activity sequences
-#
-# Use time use survey activities to populate table
-# of sampled activities
-#
+#' Sample activity sequences
+#'
+#' Use time use survey activities to populate table
+#' of sampled activities
+#'
+#' Note: in this context strata is an integer index representation
+#'       of unique combinations calculated previously
+#'
+#' @param activities - data frame with strata, pop_id and act_id columns
+#' @param tus_act_id - data frame with strata and weights columns
+#' @returns modified activities data frame
 sample_sequences <- function(activities, tus_act_id) {
 
   # Reset activity ID column to missing data
   activities$act_id <- as.numeric(NA)
 
-  # Loop for each strata
+  # Sample time use survey for each strata
   for (strata_index in unique(activities$strata)) {
     # Index rows that match strata index
     tus_row_indices <- which(tus_act_id$strata == strata_index)
@@ -131,9 +137,6 @@ sample_sequences <- function(activities, tus_act_id) {
     x <- tus_act_id$act_id[tus_row_indices]
     prob <- tus_act_id$weights[tus_row_indices]
     size <- length(activities$pop_id[act_row_indices])
-
-    # Validate sample parameters
-    cat("x:", x, "prob:", prob, "size:", size)
 
     # Perform sampling and assign to activities frame
     activities$act_id[act_row_indices] <-
