@@ -1,9 +1,9 @@
-#' Estimating exposure
+#' Estimates exposure for three groups (transport, indoor and household)
 #'
-#' @param activities_complete - output data from activity sampler
-#' @param pop_dat - population data frame
-#' @param pm25_ctm - aggregated dataframe made up of EMEP and CAMS data
-#' @return data frame of completed activities
+#' @param activities_complete - output dataframe from activity sampler
+#' @param pop_dat - population dataframe
+#' @param pm25_ctm - merged dataframe made up of EMEP and CAMS data
+#' @return dataframe of completed activities
 #'
 #' @export
 

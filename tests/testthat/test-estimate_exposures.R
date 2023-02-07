@@ -1,4 +1,4 @@
-test_that("estimate_exposures", {
+test_that("estimate_exposures works", {
   
   # Example activities data frame including all columns (all required)
   activities_complete <- data.frame(act_id = c(11354, 13473),
@@ -30,7 +30,7 @@ test_that("estimate_exposures", {
                         nssec5 = 2,
                         nssec5_label = "Intermediate occupations")
   
-  # Example merged EMEP and CAMS PM2.5 data frame containing only required columns
+  # Example merged EMEP and CAMS PM2.5 data frame containing all columns (all required)
   pm25_ctm <- data.frame(area_id = "E02000984",
                          date = as.Date("2020-12-20"),
                          hour = 0,
