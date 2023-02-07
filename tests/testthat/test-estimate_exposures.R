@@ -44,17 +44,11 @@ test_that("estimate_exposures", {
   actual <- estimate_exposures(activities_complete, pop_dat, pm25_ctm)
   
   # Change results to two decimal places in order to test against expected values
-  actual$pm25_cams_agg_tns <- round(actual$pm25_cams_agg_tns, 2)
-  actual$pm25_emep_agg_tns <- round(actual$pm25_emep_agg_tns, 2)
-  actual$pm25_five_tns <- round(actual$pm25_five_tns, 2)
+  exposures <- c("pm25_cams_agg_tns", "pm25_emep_agg_tns", "pm25_five_tns",
+                 "pm25_cams_agg_inh", "pm25_emep_agg_inh", "pm25_five_inh",
+                 "pm25_cams_agg_hhd", "pm25_emep_agg_hhd", "pm25_five_hhd")
   
-  actual$pm25_cams_agg_inh <- round(actual$pm25_cams_agg_inh, 2)
-  actual$pm25_emep_agg_inh <- round(actual$pm25_emep_agg_inh, 2)
-  actual$pm25_five_inh <- round(actual$pm25_five_inh, 2)
-  
-  actual$pm25_cams_agg_hhd <- round(actual$pm25_cams_agg_hhd, 2)
-  actual$pm25_emep_agg_hhd <- round(actual$pm25_emep_agg_hhd, 2)
-  actual$pm25_five_hhd <- round(actual$pm25_five_hhd, 2)
+  actual[, exposures] <- round(actual[, exposures], 2)
   
   expected <- data.frame(act_id = c(11354, 13473),
                          pop_id = c(13, 13),
