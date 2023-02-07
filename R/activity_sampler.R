@@ -8,10 +8,16 @@
 #' @export
 activity_sampler <- function(
     pop_dat, tus_dat, k,
-    start_date = "2020-11-30",
+    start_date = "2020-12-01",
     end_date = "2021-12-31",
     sample_size = 100) {
-  # TODO: Remove dependence on global variables, e.g. pop_dat, tus_dat
+
+  # TODO: Understand time filtering
+  #       - 04:00 - 04:00 is addressed here by starting a day early
+  #       - Mass-balance equilibrium needs a spin-up time
+  #         not accounted for here
+  day_before <- as.Date(start_date) - lubridate::days(1)
+
   # NOTE: Could the sampled population be passed in?
   activities_complete <- sample_population(subset(pop_dat, area_id == k),
     subset(tus_dat, percmissing == 0),
@@ -19,7 +25,7 @@ activity_sampler <- function(
     weights = "weights_diary",
     pop_strata = c("area_id"),
     tus_strata = c("sex", "agegr4", "nssec5", "daytype"),
-    start_date = start_date,
+    start_date = day_before,
     end_date = end_date,
     keep = c("activity", "activity_label", "location", "location_label")
   )
@@ -44,7 +50,7 @@ activity_sampler <- function(
       season_label = season_label(lubridate::month(date))
     ) %>%
     # Removing first day
-    dplyr::filter(date >= as.Date("2020-12-01") & date <= as.Date(end_date))
+    dplyr::filter(date >= as.Date(start_date) & date <= as.Date(end_date))
 
   # Adding micro-environments to the dataset
   activities_complete <- activities_complete %>%

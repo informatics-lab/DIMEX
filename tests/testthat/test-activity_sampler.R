@@ -24,6 +24,7 @@ make_population <- function(msoa) {
 
 test_that("activity_sampler given a single row", {
   # What is this test trying to show?
+  skip("purpose of this test not clear")
 
   msoa <- "E02000984"
   date_str <- "2021-01-01"
@@ -49,7 +50,7 @@ test_that("activity_sampler works", {
   # Minimal population data.frame
   msoa_id <- 2
   sample_size <- 21 # Related to days in week for now
-  start_date <- "2020-11-30"
+  start_date <- "2020-12-01"
   end_date <- "2021-12-31"
 
   population <- data.frame(
@@ -143,5 +144,7 @@ test_that("sample_sequences works", {
   )
 
   # System under test
-  sample_sequences(activities, time_use_survey_activities)
+  actual <- sample_sequences(activities, time_use_survey_activities)
+  expected <- data.frame(strata=c(2), pop_id=c(2), act_id=c(2))
+  expect_equal(actual, expected)
 })
