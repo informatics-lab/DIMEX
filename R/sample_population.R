@@ -46,9 +46,9 @@ sample_population <- function(pop_dat,
     dplyr::left_join(stratification_labels,
       by = tus_strata
     )
-  # Normalising the weights within each strata
+  # Normalising the weights within each stratum
   tus_act_id <- tus_act_id %>%
-    # Merging on summary of weights in each strata
+    # Merging on summary of weights in each stratum
     dplyr::left_join(
       tus_act_id %>%
         dplyr::group_by(strata) %>%
@@ -118,7 +118,7 @@ sample_population <- function(pop_dat,
 #' Use time use survey activities to populate table
 #' of activities
 #'
-#' Note: in this context strata is an integer index representation
+#' Note: in this context stratum is an integer index representation
 #'       of unique combinations calculated previously
 #'
 #' @param activities - data frame with strata, pop_id and act_id columns
@@ -129,11 +129,11 @@ sample_sequences <- function(activities, tus_act_id) {
   # Reset activity ID column to missing data
   activities$act_id <- as.numeric(NA)
 
-  # Sample time use survey for each strata
-  for (strata_index in unique(activities$strata)) {
+  # Sample time use survey for each stratum
+  for (stratum in unique(activities$strata)) {
     # Index rows that match strata index
-    tus_row_indices <- which(tus_act_id$strata == strata_index)
-    act_row_indices <- which(activities$strata == strata_index)
+    tus_row_indices <- which(tus_act_id$strata == stratum)
+    act_row_indices <- which(activities$strata == stratum)
 
     # Sample parameters
     x <- tus_act_id$act_id[tus_row_indices]
@@ -155,7 +155,7 @@ stratify_by_column <- function(frame, column_names) {
     # Summarising
     dplyr::summarise(n = dplyr::n()) %>%
     dplyr::ungroup() %>%
-    # Adding label to each strata
+    # Adding label to each stratum
     dplyr::mutate(strata = 1:dplyr::n()) %>%
     dplyr::select(-c(n))
 }

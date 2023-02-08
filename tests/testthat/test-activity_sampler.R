@@ -77,13 +77,13 @@ test_that("activity_sampler works", {
 })
 
 test_that("sample_sequences works", {
-  # NOTE: sampling blows up if a strata only has one row and the activity_id
+  # NOTE: sampling blows up if a stratum only has one row and the activity_id
   #       is not 1, which leads to sample(x = 2, size = 1, prob = 1) issue
   # Activities
-  strata <- 2
+  stratum <- 2
   population_id <- 2
   activities <- data.frame(
-    strata = strata,
+    strata = stratum,
     pop_id = population_id
   )
 
