@@ -23,6 +23,6 @@ Use time use survey activities to populate table
 of activities
 }
 \details{
-Note: in this context strata is an integer index representation
+Note: in this context stratum is an integer index representation
 of unique combinations calculated previously
 }

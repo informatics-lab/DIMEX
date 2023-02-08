@@ -1,4 +1,8 @@
-# Type of day in terms of a number
+#' Type of day in terms of a number
+#' 
+#' @export
+#' @param day - integer between 1 and 7
+#' @returns integer representing either week day or weekend
 day_type <- function(day) {
   dplyr::case_when(
     day %in% c(1, 7) ~ 1,
@@ -6,7 +10,11 @@ day_type <- function(day) {
   )
 }
 
-# Type of day, either Weekend or Weekday
+#' Type of day, either Weekend or Weekday
+#' 
+#' @export
+#' @param day - integer between 1 and 7
+#' @returns string either "Weekend" or "Weekday"
 day_type_label <- function(day) {
   dplyr::case_when(
     day_type(day) == 1 ~ "Weekend",
@@ -14,12 +22,20 @@ day_type_label <- function(day) {
   )
 }
 
-# Day of week in terms of a number
+#' Day of week in terms of a number
+#' 
+#' @export
+#' @param date - a Date object
+#' @returns integer between 1 and 7 inclusive
 day_number <- function(date) {
   as.numeric(factor(weekdays(date), levels = c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")))
 }
 
-# Season
+#' Season
+#' 
+#' @export
+#' @param month - integer between 1 and 12 inclusive
+#' @returns integer representing season
 season <- function(month) {
   dplyr::case_when(
     month %in% c(12, 1, 2) ~ 1,
@@ -29,7 +45,11 @@ season <- function(month) {
   )
 }
 
-# Season label
+#' Season label
+#' 
+#' @export
+#' @param month - integer between 1 and 12 inclusive
+#' @returns string of "Winter", "Spring", "Summer" or "Autumn"
 season_label <- function(month) {
   dplyr::case_when(
     season(month) == 1 ~ "Winter",
