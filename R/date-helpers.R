@@ -9,8 +9,8 @@ day_type <- function(day) {
 # Type of day, either Weekend or Weekday
 day_type_label <- function(day) {
   dplyr::case_when(
-    day %in% c(1, 7) ~ "Weekend",
-    day %in% 2:6 ~ "Weekday"
+    day_type(day) == 1 ~ "Weekend",
+    day_type(day) == 2 ~ "Weekday"
   )
 }
 
@@ -32,10 +32,10 @@ season <- function(month) {
 # Season label
 season_label <- function(month) {
   dplyr::case_when(
-    month %in% c(12, 1, 2) ~ "Winter",
-    month %in% c(3:5) ~ "Spring",
-    month %in% c(6:8) ~ "Summer",
-    month %in% c(9:11) ~ "Autumn"
+    season(month) == 1 ~ "Winter",
+    season(month) == 2 ~ "Spring",
+    season(month) == 3 ~ "Summer",
+    season(month) == 4 ~ "Autumn"
   )
 }
 
