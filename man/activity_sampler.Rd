@@ -4,7 +4,14 @@
 \alias{activity_sampler}
 \title{Sampling activity sequences (Method 1) - Complete sequences only}
 \usage{
-activity_sampler(pop_dat, tus_dat, k)
+activity_sampler(
+  pop_dat,
+  tus_dat,
+  k,
+  start_date = "2020-12-01",
+  end_date = "2021-12-31",
+  sample_size = 100
+)
 }
 \arguments{
 \item{pop_dat}{\itemize{
