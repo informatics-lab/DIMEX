@@ -4,11 +4,11 @@
 \alias{date_filter}
 \title{Date filter}
 \usage{
-date_filter(date, start_date, end_date)
+date_filter(frame, start_date, end_date)
 }
 \arguments{
-\item{date}{\itemize{
-\item date column
+\item{frame}{\itemize{
+\item data frame to filter
 }}
 
 \item{start_date}{\itemize{
