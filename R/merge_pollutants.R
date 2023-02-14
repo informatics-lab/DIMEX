@@ -9,7 +9,7 @@
 merge_pollutants <- function(pm25_cams, pm25_emep, start_date, end_date) {
   pm25_ctm <- pm25_cams %>%
     dplyr::select(area_id, date, hour, pm25_cams_agg) %>%
-    left_join(pm25_emep %>%
+    dplyr::left_join(pm25_emep %>%
                 dplyr::select(area_id, date, hour, pm25_emep_agg = pm25_cams_agg),
               by = c("area_id", "date", "hour")) %>%
     dplyr::filter(as.Date(date) >= as.Date(start_date) &
