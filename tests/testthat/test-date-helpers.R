@@ -43,3 +43,14 @@ test_that("season_label", {
   )
   expect_equal(actual, expected)
 })
+
+test_that("date_filter on data frame", {
+  frame <- data.frame(
+    date = format(seq(as.Date("2021-01-01"), by = "month", length.out = 12), "%Y-%m-%d"),
+    value = seq(1, length.out = 12)
+  )
+  start_date <- as.Date("2021-03-01")
+  end_date <- as.Date("2021-09-01")
+  actual <- frame %>% date_filter(start_date, end_date)
+  expect_equal(nrow(actual), 7)
+})

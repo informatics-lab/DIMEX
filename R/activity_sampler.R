@@ -50,7 +50,7 @@ activity_sampler <- function(
       season_label = season_label(lubridate::month(date))
     ) %>%
     # Removing first day
-    dplyr::filter(date >= as.Date(start_date) & date <= as.Date(end_date))
+    date_filter(start_date, end_date)
 
   # Adding micro-environments to the dataset
   activities_complete <- activities_complete %>%

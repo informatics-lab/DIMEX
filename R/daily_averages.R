@@ -4,10 +4,14 @@
 #' @return  dataframe of personal daily average exposure estimates
 #'
 #' @export
-daily_averages <- function(activities_complete) {
+daily_averages <- function(
+    activities_complete,
+    start_date = "2021-01-01",
+    end_date = "2021-03-31")
+{
   activities_complete <- activities_complete %>%
     # Only keeping Q1 2021
-    dplyr::filter(date >= as.Date("2021-01-01")) %>%
+    date_filter(start_date, end_date) %>%
     # Getting exposures 
     dplyr::mutate(exposure_cams = ifelse(micro_group == "outdoor", pm25_cams_agg,
                                   ifelse(micro_group == "indoor", pm25_cams_agg_inh,
