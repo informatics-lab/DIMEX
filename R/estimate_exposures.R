@@ -7,13 +7,16 @@
 #'
 #' @export
 
-estimate_exposures <- function(activities_complete, pop_dat, pm25_ctm) {
+estimate_exposures <- function(
+    activities_complete, pop_dat, pm25_ctm,
+    start_date = "2020-12-20",
+    end_date = "2021-03-31")
+{
   # Preparing data for exposure modelling
   activities_complete <- activities_complete %>%
     # Only keeping specific period
     # TODO: convert date index to datetime format
-    dplyr::filter(as.numeric(date) >= 18616 &
-             as.numeric(date) <= 18717) %>%
+    date_filter(start_date, end_date) %>%
     # Adding on demographic variables
     dplyr::left_join(pop_dat %>%
                        dplyr::select(pop_id, area_id, sex, sex_label, agegr4, agegr4_label, nssec5, nssec5_label),
@@ -43,6 +46,3 @@ estimate_exposures <- function(activities_complete, pop_dat, pm25_ctm) {
                                              ambient = "pm25_five", outvar = "pm25_five_hhd")
   activities_complete
 }
-
-
-
