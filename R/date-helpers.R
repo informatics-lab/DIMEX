@@ -51,11 +51,12 @@ season <- function(month) {
 #' @param month - integer between 1 and 12 inclusive
 #' @returns string of "Winter", "Spring", "Summer" or "Autumn"
 season_label <- function(month) {
+  x <- season(month)
   dplyr::case_when(
-    season(month) == 1 ~ "Winter",
-    season(month) == 2 ~ "Spring",
-    season(month) == 3 ~ "Summer",
-    season(month) == 4 ~ "Autumn"
+      x == 1 ~ "Winter",
+      x == 2 ~ "Spring",
+      x == 3 ~ "Summer",
+      x == 4 ~ "Autumn"
   )
 }
 
