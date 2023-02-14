@@ -59,3 +59,16 @@ season_label <- function(month) {
   )
 }
 
+#' Date filter
+#' 
+#' @export
+#' @param date - date column
+#' @param start_date - start date of date filter interval (inclusive)
+#' @param end_date - end date of date filter interval (inclusive)
+#' @returns only dates within filter window
+date_filter <- function(date, start_date, end_date) {
+  dplyr::filter(
+    as.Date(date) >= as.Date(start_date) &
+    as.Date(date) <= as.Date(end_date)
+  )
+}
