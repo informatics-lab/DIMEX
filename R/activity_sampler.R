@@ -27,7 +27,7 @@ activity_sampler <- function(
     tus_strata = c("sex", "agegr4", "nssec5", "daytype"),
     start_date = day_before,
     end_date = end_date,
-    keep = c("activity", "activity_label", "location", "location_label")
+    keep = c("activity", "location")
   )
 
   # Activity sequences run from 04:00-03:59 so need to "shift"
@@ -39,15 +39,12 @@ activity_sampler <- function(
       date = dplyr::if_else(hour %in% 0:3, date + 1, date)
     ) %>%
     # Removign day information as we have to shift the day
-    dplyr::select(-c(day, day_label, daytype, daytype_label, season, season_label)) %>%
+    dplyr::select(-c(day, daytype, season)) %>%
     # Adding on day information
     dplyr::mutate(
-      day_label = weekdays(date),
       day = day_number(date),
       daytype = day_type(day),
-      daytype_label = day_type_label(day),
       season = season(lubridate::month(date)),
-      season_label = season_label(lubridate::month(date))
     ) %>%
     # Removing first day
     date_filter(start_date, end_date)

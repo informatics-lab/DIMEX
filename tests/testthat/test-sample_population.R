@@ -15,9 +15,7 @@ test_that("sample_population", {
     agegr4 = c(0, 0),
     nssec5 = c(0, 0),
     time = c(0, 0),
-    time_label = c(0, 0),
-    activity = c(0, 0),
-    activity_label = c(0, 0)
+    activity = c(0, 0)
   )
 
   nsample <- 1
@@ -28,7 +26,7 @@ test_that("sample_population", {
 
   start_date <- "2023-01-01"
   end_date <- "2023-01-01"
-  keep <- c("activity", "activity_label")
+  keep <- c("activity")
 
   actual <- sample_population(
     pop_dat,
@@ -68,11 +66,8 @@ test_that("stress test population sampler to understand limitations", {
     act_id = 1,
     daytype = 2,
     time = 0,
-    time_label = 0,
     activity = 0,
-    activity_label = 0,
-    location = 0,
-    location_label = 0
+    location = 0
   )
 
   # System under test
@@ -85,31 +80,23 @@ test_that("stress test population sampler to understand limitations", {
     tus_strata = c("sex", "agegr4", "nssec5", "daytype"),
     start_date = a_date,
     end_date = a_date,
-    keep = c("activity", "activity_label", "location", "location_label")
+    keep = c("activity", "location")
   )
 
   # Expectation (column order important for data.frame equals)
   date <- as.Date(a_date)
   day <- day_number(date)
-  day_label <- weekdays(date)
   daytype <- day_type(day)
-  daytype_label <- day_type_label(day)
   expected <- data.frame(
     act_id = 1,
     pop_id = 1,
     date = date,
-    day_label = day_label,
     day = day,
     daytype = daytype,
-    daytype_label = daytype_label,
     season = season(lubridate::month(date)),
-    season_label = season_label(lubridate::month(date)),
     time = 0,
-    time_label = 0,
     activity = 0,
-    activity_label = 0,
-    location = 0,
-    location_label = 0
+    location = 0
   )
 
   expect_equal(actual[1, ], expected)

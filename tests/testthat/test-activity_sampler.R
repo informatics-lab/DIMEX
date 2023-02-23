@@ -27,11 +27,8 @@ test_that("activity_sampler works", {
     act_id = 1,
     daytype = rep(1:7, each = 15)[1:sample_size],
     time = 0,
-    time_label = 0,
     activity = 0,
-    activity_label = 0,
-    location = 0,
-    location_label = 0
+    location = 0
   )
 
   # System under test
@@ -53,18 +50,12 @@ test_that("activity_sampler works", {
     pop_id = ones,
     date = ones,
     time = ones,
-    time_label = ones,
     activity = ones,
-    activity_label = ones,
     location = ones,
-    location_label = ones,
     hour = ones,
-    day_label = ones,
     day = ones,
     daytype = ones,
-    daytype_label = ones,
     season = ones,
-    season_label = ones,
     micro_group = ones
   )
 
