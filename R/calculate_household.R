@@ -61,13 +61,13 @@ calculate_household <- function(act_dat,
       SOther
     
     # calculate air exchange rate (Murray and Burmaster (1995) Region 3)
-    v <- if (season_label(unique(tmp1$season)) == 'Winter') {
+    v <- if (unique(tmp1$season) == 1) {  # Winter
       rlnorm(n = Npop, meanlog = -0.958, sdlog = 0.589)
-    } else if (season_label(unique(tmp1$season)) == 'Spring') {
+    } else if (unique(tmp1$season) == 2) {  # Spring
       rlnorm(n = Npop, meanlog = -0.802, sdlog = 0.782)
-    } else if (season_label(unique(tmp1$season)) == 'Summer') {
+    } else if (unique(tmp1$season) == 3) {  # Summer
       rlnorm(n = Npop, meanlog = -0.588, sdlog = 0.612)
-    } else if (season_label(unique(tmp1$season)) == 'Autumn') {
+    } else if (unique(tmp1$season) == 4) {  # Autumn
       rlnorm(n = Npop, meanlog = -0.787, sdlog = 0.453)
     }
     
