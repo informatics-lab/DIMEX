@@ -78,12 +78,9 @@ sample_population <- function(pop_dat,
   ) %>%
     # Adding on day information
     dplyr::mutate(
-      day_label = weekdays(date),
       day = day_number(date),
       daytype = day_type(day),
-      daytype_label = day_type_label(day),
-      season = season(lubridate::month(date)),
-      season_label = season_label(lubridate::month(date))
+      season = season(lubridate::month(date))
     ) %>%
     # Merging on population data
     dplyr::left_join(
@@ -104,7 +101,7 @@ sample_population <- function(pop_dat,
 
   # Merging on the activity data
   activities <- merge(activities,
-    tus_dat[, c("act_id", "time", "time_label", keep)],
+    tus_dat[, c("act_id", "time", keep)],
     by = "act_id"
   ) %>%
     dplyr::arrange(pop_id, date, time) %>%

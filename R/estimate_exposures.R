@@ -19,7 +19,7 @@ estimate_exposures <- function(
     date_filter(start_date, end_date) %>%
     # Adding on demographic variables
     dplyr::left_join(pop_dat %>%
-                       dplyr::select(pop_id, area_id, sex, sex_label, agegr4, agegr4_label, nssec5, nssec5_label),
+                       dplyr::select(pop_id, area_id, sex, agegr4, nssec5),
                      by = 'pop_id') %>%
     # Merging on pm data
     dplyr::left_join(pm25_ctm %>%

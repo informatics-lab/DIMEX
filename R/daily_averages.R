@@ -26,8 +26,7 @@ daily_averages <- function(
                                                 ifelse(micro_group == "transport", pm25_five_tns,
                                                        ifelse(micro_group == "home", pm25_five_hhd, NA)))))%>%
        # Averaging by day
-    plyr::ddply(plyr::.(area_id, pop_id, date, daytype, daytype_label, season, season_label,
-            sex, sex_label, agegr4, agegr4_label, nssec5, nssec5_label),
+    plyr::ddply(plyr::.(area_id, pop_id, date, daytype, season, sex, agegr4, nssec5),
           plyr::summarize,
           exposure_cams = mean(exposure_cams),
           exposure_emep = mean(exposure_emep),
